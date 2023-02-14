@@ -1,0 +1,90 @@
+.centralize {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.searchbox_space {
+    display: flex; 
+    z-index: 3; 
+    height: 44px; 
+    background: white;
+    border: 1px solid #5f6368;
+    box-shadow: none;
+    border-radius: 24px;
+    margin: 0 auto;
+    width: 638px;
+    width: auto;
+}
+
+.formitem_space {
+    margin: 0 auto;
+    padding-top: 6px;
+    width: auto;
+    max-width: 584px;
+    position: relative;
+}
+
+.icontextaudioimage_space {
+    flex: 1;
+    display: flex;
+    padding: 7px 10px 0 10px;
+}
+
+.search_align {
+    padding-top: 5px;
+    padding-left: 10px;
+}
+
+.search_text {
+    background-color: transparent;
+    border: none;
+    margin: 0;
+    padding: 0;
+    color: black;
+    word-wrap: break-word;
+    outline: none;
+    display: flex;
+    -webkit-tap-highlight-color: transparent;
+    height: 34px;
+    font-size: 16px;
+    flex: 100%;
+}
+
+.searchtext_space {
+    display: flex; 
+    flex: 1; 
+    flex-wrap: wrap;
+}
+
+.spacer {
+    padding-right: 4px;
+    background: transparent;
+    align-items: center;
+    flex: 1 0 auto;
+    flex-direction: row;
+    display: flex;
+}
+
+.btn_space{
+    height: 70px;
+    padding-top: 18px
+}
+
+.btn {
+    background-color: #e7e7e7;
+    border: 1px solid #303134;
+    border-radius: 4px;
+    color: #303134;
+    font-family: arial,sans-serif;
+    font-size: 14px;
+    margin: 11px 4px;
+    padding: 0 16px;
+    line-height: 27px;
+    height: 36px;
+    min-width: 54px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+}
