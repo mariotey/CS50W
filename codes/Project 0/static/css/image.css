@@ -17,8 +17,26 @@
     padding-bottom: 40px;
 }
 
-/*  */
+.form_space {
+    margin: 0 auto;
+    padding-top: 6px;
+    width: auto;
+    max-width: 584px;
+    position: relative;
+}
 
+.searchbox_space {
+    display: flex; 
+    z-index: 3; 
+    height: 44px; 
+    background: white;
+    border: 1px solid #5f6368;
+    box-shadow: none;
+    border-radius: 24px;
+    margin: 0 auto;
+    width: 638px;
+    width: auto;
+}
 
 .search_icon {
     width: 20px;
@@ -31,11 +49,53 @@
     margin-top: -5px;
 }
 
+.searchtext_space {
+    display: flex; 
+    flex: 1; 
+    flex-wrap: wrap;
+}
+
+.search_text {
+    background-color: transparent;
+    border: none;
+    margin: 0;
+    padding: 0;
+    color: black;
+    word-wrap: break-word;
+    outline: none;
+    display: flex;
+    -webkit-tap-highlight-color: transparent;
+    height: 34px;
+    font-size: 16px;
+    flex: 100%;
+}
+
+.audioimage_space {
+    display: flex;
+    flex: 0 0 auto;
+    margin-top: -5px;
+    align-items: stretch;
+    flex-direction: row;
+}
+
+.audioicon_space {
+    flex: 1 0 auto; 
+    display: flex; 
+    cursor: pointer; 
+    align-items: center; 
+    border: 0;
+    background: transparent;
+    outline: none;
+    padding: 0 8px;
+    width: 24px;
+    line-height: 44px;
+}
+
 .audio_icon {
     width: 30px;
 }
 
-.audioicon_space {
+.cameraicon_space {
     flex: 1 0 auto; 
     display: flex; 
     cursor: pointer; 
@@ -52,23 +112,58 @@
     width: 25px;
 }
 
-.cameraicon_space {
-    flex: 1 0 auto; 
-    display: flex; 
-    cursor: pointer; 
-    align-items: center; 
-    border: 0;
-    background: transparent;
-    outline: none;
-    padding: 0 8px;
-    width: 24px;
-    line-height: 44px;
+.icontextaudioimage_space {
+    flex: 1;
+    display: flex;
+    padding: 7px 10px 0 10px;
 }
 
-.audioimage_space {
+.icontextaudioimage_space {
+    flex: 1;
     display: flex;
-    flex: 0 0 auto;
-    margin-top: -5px;
-    align-items: stretch;
-    flex-direction: row;
+    padding: 7px 10px 0 10px;
 }
+
+.search_align {
+    padding-top: 5px;
+    padding-left: 10px;
+}
+
+.btn_space{
+    height: 70px;
+    padding-top: 18px
+}
+
+.btn {
+    background-color: #e7e7e7;
+    border: 1px solid #303134;
+    border-radius: 4px;
+    color: #303134;
+    font-family: arial,sans-serif;
+    font-size: 14px;
+    margin: 11px 4px;
+    padding: 0 16px;
+    line-height: 27px;
+    height: 36px;
+    min-width: 54px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.spacer {
+    padding-right: 4px;
+    background: transparent;
+    align-items: center;
+    flex: 1 0 auto;
+    flex-direction: row;
+    display: flex;
+}
+
+
+
+
+
+
+
+

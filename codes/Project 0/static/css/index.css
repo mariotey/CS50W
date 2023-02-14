@@ -17,9 +17,13 @@
     padding-bottom: 40px;
 }
 
-/*  */
-
-
+.form_space {
+    margin: 0 auto;
+    padding-top: 6px;
+    width: auto;
+    max-width: 584px;
+    position: relative;
+}
 
 .searchbox_space {
     display: flex; 
@@ -34,23 +38,21 @@
     width: auto;
 }
 
-.formitem_space {
-    margin: 0 auto;
-    padding-top: 6px;
-    width: auto;
-    max-width: 584px;
-    position: relative;
+.search_icon {
+    width: 20px;
 }
 
-.icontextaudioimage_space {
-    flex: 1;
+.searchicon_space{
     display: flex;
-    padding: 7px 10px 0 10px;
+    align-items: center;
+    padding-right: 13px;
+    margin-top: -5px;
 }
 
-.search_align {
-    padding-top: 5px;
-    padding-left: 10px;
+.searchtext_space {
+    display: flex; 
+    flex: 1; 
+    flex-wrap: wrap;
 }
 
 .search_text {
@@ -68,19 +70,63 @@
     flex: 100%;
 }
 
-.searchtext_space {
-    display: flex; 
-    flex: 1; 
-    flex-wrap: wrap;
+.audioimage_space {
+    display: flex;
+    flex: 0 0 auto;
+    margin-top: -5px;
+    align-items: stretch;
+    flex-direction: row;
 }
 
-.spacer {
-    padding-right: 4px;
+.audioicon_space {
+    flex: 1 0 auto; 
+    display: flex; 
+    cursor: pointer; 
+    align-items: center; 
+    border: 0;
     background: transparent;
-    align-items: center;
-    flex: 1 0 auto;
-    flex-direction: row;
+    outline: none;
+    padding: 0 8px;
+    width: 24px;
+    line-height: 44px;
+}
+
+.audio_icon {
+    width: 30px;
+}
+
+.cameraicon_space {
+    flex: 1 0 auto; 
+    display: flex; 
+    cursor: pointer; 
+    align-items: center; 
+    border: 0;
+    background: transparent;
+    outline: none;
+    padding: 0 8px;
+    width: 24px;
+    line-height: 44px;
+}
+
+.camera_icon {
+    width: 25px;
+}
+
+.icontextaudioimage_space {
+    flex: 1;
     display: flex;
+    padding: 7px 10px 0 10px;
+}
+
+.icontextaudioimage_space {
+    flex: 1;
+    display: flex;
+    padding: 7px 10px 0 10px;
+}
+
+.search_align {
+    padding-top: 5px;
+    padding-left: 10px;
 }
 
 .btn_space{
@@ -104,6 +150,16 @@
     cursor: pointer;
     user-select: none;
 }
+
+.spacer {
+    padding-right: 4px;
+    background: transparent;
+    align-items: center;
+    flex: 1 0 auto;
+    flex-direction: row;
+    display: flex;
+}
+
 
 
 
