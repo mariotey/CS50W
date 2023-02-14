@@ -1,3 +1,18 @@
+.webpageOpt_div {
+    vertical-align: middle;
+    white-space: nowrap;
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    box-sizing: border-box;
+    height: 48px;
+    line-height: normal;
+    padding: 4px 4px;
+    justify-content: flex-end;
+}
+
+/*  */
+
 .image {
     width: 250px;
     padding-top: 100px;

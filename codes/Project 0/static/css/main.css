@@ -1,0 +1,14 @@
+.webpageOpt_space {
+    display: inline-block;
+    padding-left: 15px;
+    font-family: arial, sans-serif;
+    line-height: normal;
+    padding-right: 15px;
+}
+
+.webpageOpt {
+    display: inline-block;
+    line-height: 24px;
+    vertical-align: middle;
+    cursor: pointer;
+}

@@ -1,3 +1,32 @@
+.webpageOpt_div {
+    vertical-align: middle;
+    white-space: nowrap;
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    box-sizing: border-box;
+    height: 48px;
+    line-height: normal;
+    padding: 4px 4px;
+    justify-content: space-between;
+}
+
+.google_space {
+    display: inline-block;
+    padding-left: 15px;
+    line-height: normal;
+    padding-left: 15px;
+}
+
+.google {
+    width: 100px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+/*  */
+
+
 .advance_header {
     font-size: 20px;
     margin: 25px 35px;

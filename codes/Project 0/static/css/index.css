@@ -1,3 +1,19 @@
+.webpageOpt_div {
+    vertical-align: middle;
+    white-space: nowrap;
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    box-sizing: border-box;
+    height: 48px;
+    line-height: normal;
+    padding: 4px 4px;
+    justify-content: flex-end;
+}
+
+
+/*  */
+
 .centralize {
     display: flex;
     justify-content: center;
@@ -89,45 +105,8 @@
     user-select: none;
 }
 
-.imageadvance_space {
-    vertical-align: middle;
-    white-space: nowrap;
-    -webkit-box-align: center;
-    align-items: center;
-    display: flex;
-    box-sizing: border-box;
-    height: 48px;
-    line-height: normal;
-    padding: 4px 4px;
-    justify-content: flex-end;
-}
 
-.searchbtn_space {
-    display: inline-block;
-    padding-left: 15px;
-    font-family: arial, sans-serif;
-    line-height: normal;
-    padding-right: 15px;
-}
 
-.search_btn {
-    display: inline-block;
-    line-height: 24px;
-    vertical-align: middle;
-    cursor: pointer;
-}
 
-.advanceicon_space {
-    display: inline-block;
-    padding-left: 15px;
-    line-height: normal;
-    padding-left: 15px;
-}
-
-.advanceicon {
-    width: 100px;
-    padding-top: 50px;
-    padding-bottom: 50px;
-}
 
 
