@@ -1,0 +1,77 @@
+.advance_header {
+    font-size: 20px;
+    margin: 25px 35px;
+    color: #f28b82;
+    font-family: arial,sans-serif;
+}
+
+.divider {
+    border-color: #3c4043;
+    border-bottom: 1px solid #3c4043;
+}
+
+.advance_btn {
+    background: #8ab4f8;
+    border-color: #8ab4f8;
+    color: white;
+    border: 1px solid #3079ed;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+    line-height: 27px;
+    height: 36px;
+    min-width: 54px;
+    font-family: arial,sans-serif;
+}
+
+.advanceform_space{
+    margin: 20px 45px;
+    padding-top: 6px;
+    width: auto;
+    max-width: 584px;
+    position: relative;
+}
+
+.input_space {
+    width: 100%;
+    clear: both;
+}
+
+.label_space{
+    width: max-content;
+    display: flex;
+}
+
+.inputlabel{
+    font-family: arial,sans-serif;
+    font-size: 13px;
+    width: 155px;
+    margin-bottom: 25px;
+}
+
+.inputtext{
+    font-family: arial,sans-serif;
+    background: white;
+    border: 1px solid #5f6368;
+    color: black;
+    text-align: left;
+    font-size: 13px;
+    height: 25px;
+    width: 550px;
+    padding: 1px 8px;
+}
+
+.empty_one{
+    display: inline-block;
+    width: 155px;
+    vertical-align: middle;
+}
+
+.advancebtn_space{
+    display: inline-block;
+    height: 70px;
+    width: 568px;
+}

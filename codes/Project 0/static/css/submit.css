@@ -98,8 +98,7 @@
     box-sizing: border-box;
     height: 48px;
     line-height: normal;
-    padding: 0 4px;
-    padding-left: 30px;
+    padding: 4px 4px;
     justify-content: flex-end;
 }
 
@@ -116,6 +115,19 @@
     line-height: 24px;
     vertical-align: middle;
     cursor: pointer;
+}
+
+.advanceicon_space {
+    display: inline-block;
+    padding-left: 15px;
+    line-height: normal;
+    padding-left: 15px;
+}
+
+.advanceicon {
+    width: 100px;
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 
 
