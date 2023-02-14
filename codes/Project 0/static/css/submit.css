@@ -88,3 +88,34 @@
     cursor: pointer;
     user-select: none;
 }
+
+.imageadvance_space {
+    vertical-align: middle;
+    white-space: nowrap;
+    -webkit-box-align: center;
+    align-items: center;
+    display: flex;
+    box-sizing: border-box;
+    height: 48px;
+    line-height: normal;
+    padding: 0 4px;
+    padding-left: 30px;
+    justify-content: flex-end;
+}
+
+.searchbtn_space {
+    display: inline-block;
+    padding-left: 15px;
+    font-family: arial, sans-serif;
+    line-height: normal;
+    padding-right: 15px;
+}
+
+.search_btn {
+    display: inline-block;
+    line-height: 24px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+
