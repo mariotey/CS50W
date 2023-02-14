@@ -1,12 +1,9 @@
 .webpageOpt_div {
-    vertical-align: middle;
     white-space: nowrap;
-    -webkit-box-align: center;
     align-items: center;
     display: flex;
     box-sizing: border-box;
     height: 48px;
-    line-height: normal;
     padding: 4px 4px;
     justify-content: space-between;
 }
@@ -14,11 +11,9 @@
 .googleicon_space {
     display: inline-block;
     padding-left: 15px;
-    line-height: normal;
-    padding-left: 15px;
 }
 
-.googleicon {
+.google_icon {
     width: 100px;
     padding-top: 50px;
     padding-bottom: 50px;
@@ -31,14 +26,51 @@
     font-family: arial,sans-serif;
 }
 
-.divider {
-    border-color: #3c4043;
-    border-bottom: 1px solid #3c4043;
+.form_space{
+    margin: 20px 45px;
+    padding-top: 6px;
+    width: auto;
+    max-width: 584px;
+    position: relative;
 }
 
-/*  */
+.input_space{
+    width: max-content;
+    display: flex;
+}
 
-.advance_btn {
+.input_label{
+    font-family: arial,sans-serif;
+    font-size: 13px;
+    width: 155px;
+    margin-bottom: 25px;
+}
+
+.input_text{
+    font-family: arial,sans-serif;
+    background: white;
+    border: 1px solid #5f6368;
+    color: black;
+    text-align: left;
+    font-size: 13px;
+    height: 25px;
+    width: 550px;
+    padding: 1px 8px;
+}
+
+.empty_div{
+    display: inline-block;
+    width: 155px;
+    vertical-align: middle;
+}
+
+.btn_space{
+    display: inline-block;
+    height: 70px;
+    width: 568px;
+}
+
+.btn {
     background: #8ab4f8;
     border-color: #8ab4f8;
     color: white;
@@ -53,53 +85,4 @@
     height: 36px;
     min-width: 54px;
     font-family: arial,sans-serif;
-}
-
-.advanceform_space{
-    margin: 20px 45px;
-    padding-top: 6px;
-    width: auto;
-    max-width: 584px;
-    position: relative;
-}
-
-.input_space {
-    width: 100%;
-    clear: both;
-}
-
-.label_space{
-    width: max-content;
-    display: flex;
-}
-
-.inputlabel{
-    font-family: arial,sans-serif;
-    font-size: 13px;
-    width: 155px;
-    margin-bottom: 25px;
-}
-
-.inputtext{
-    font-family: arial,sans-serif;
-    background: white;
-    border: 1px solid #5f6368;
-    color: black;
-    text-align: left;
-    font-size: 13px;
-    height: 25px;
-    width: 550px;
-    padding: 1px 8px;
-}
-
-.empty_one{
-    display: inline-block;
-    width: 155px;
-    vertical-align: middle;
-}
-
-.advancebtn_space{
-    display: inline-block;
-    height: 70px;
-    width: 568px;
 }

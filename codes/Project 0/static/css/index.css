@@ -25,7 +25,7 @@
     position: relative;
 }
 
-.searchbox_space {
+.input_space {
     display: flex; 
     z-index: 3; 
     height: 44px; 
@@ -38,8 +38,10 @@
     width: auto;
 }
 
-.search_icon {
-    width: 20px;
+.input_div {
+    flex: 1;
+    display: flex;
+    padding: 7px 10px 0 10px;
 }
 
 .searchicon_space{
@@ -49,13 +51,17 @@
     margin-top: -5px;
 }
 
-.searchtext_space {
+.search_icon {
+    width: 20px;
+}
+
+.inputtext_space {
     display: flex; 
     flex: 1; 
     flex-wrap: wrap;
 }
 
-.search_text {
+.input_text {
     background-color: transparent;
     border: none;
     margin: 0;
@@ -70,7 +76,7 @@
     flex: 100%;
 }
 
-.audioimage_space {
+.othericon_div {
     display: flex;
     flex: 0 0 auto;
     margin-top: -5px;
@@ -78,7 +84,16 @@
     flex-direction: row;
 }
 
-.audioicon_space {
+.empty_div {
+    padding-right: 4px;
+    background: transparent;
+    align-items: center;
+    flex: 1 0 auto;
+    flex-direction: row;
+    display: flex;
+}
+
+.othericon_space {
     flex: 1 0 auto; 
     display: flex; 
     cursor: pointer; 
@@ -89,10 +104,6 @@
     padding: 0 8px;
     width: 24px;
     line-height: 44px;
-}
-
-.audio_icon {
-    width: 30px;
 }
 
 .cameraicon_space {
@@ -112,21 +123,8 @@
     width: 25px;
 }
 
-.icontextaudioimage_space {
-    flex: 1;
-    display: flex;
-    padding: 7px 10px 0 10px;
-}
-
-.icontextaudioimage_space {
-    flex: 1;
-    display: flex;
-    padding: 7px 10px 0 10px;
-}
-
-.search_align {
-    padding-top: 5px;
-    padding-left: 10px;
+.audio_icon {
+    width: 30px;
 }
 
 .btn_space{
@@ -150,19 +148,3 @@
     cursor: pointer;
     user-select: none;
 }
-
-.spacer {
-    padding-right: 4px;
-    background: transparent;
-    align-items: center;
-    flex: 1 0 auto;
-    flex-direction: row;
-    display: flex;
-}
-
-
-
-
-
-
-

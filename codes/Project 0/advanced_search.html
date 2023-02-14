@@ -4,16 +4,15 @@
     <head>
         <title>Advanced Search</title>
         <link rel="stylesheet" href="./static/css/main.css">
-        <link rel="stylesheet" href="./static/css/index.css">
         <link rel="stylesheet" href="./static/css/advanced.css">
     </head>
     <body>
         <div class = "webpageOpt_div">
             <div class = "googleicon_space">
-                <img src = "./static/pics/Google.png" class = "googleicon">
+                <img src = "./static/pics/Google.png" class = "google_icon">
             </div>
             <div class = "webpageOpt_space">
-                <a href = "index.html" class="search_btn"> 
+                <a href = "index.html" class="webpageOpt"> 
                     Google Search 
                 </a>
             </div>
@@ -23,52 +22,51 @@
             <label style="margin-left:10px">Advanced Search</label>
         </div>
 
-        <div class="divider"></div>
+        <div style = "border-bottom: 1px solid #3c4043;"></div>
         
         <form action="https://google.com/search">  
-            <div class = "advanceform_space">
-                <div style = "margin-bottom: 15px; font-family: arial,sans-serif;">
-                    Find pages with...
-                </div>              
+            <div class = "form_space">
+                <div style = "margin-bottom: 15px; font-family: arial,sans-serif;"> Find pages with... </div>              
                 
-                <div class = "input_space">
-                    <div class = "label_space">
-                        <div class = "inputlabel"> all these words:</div>
+                <div>
+                    <div class = "input_space">
+                        <div class = "input_label"> all these words:</div>
                         <div>
-                            <input type="text" name = "as_q" class="inputtext">
+                            <input type="text" name = "as_q" class="input_text">
                         </div>
                     </div>
-                    <div class = "label_space">
-                        <div class = "inputlabel"> this exact word or phrase:</div>
+                    <div class = "input_space">
+                        <div class = "input_label"> this exact word or phrase:</div>
                         <div>
-                            <input type="text" name = "as_epq" class="inputtext">
+                            <input type="text" name = "as_epq" class="input_text">
                         </div>
                     </div>
-                    <div class = "label_space">
-                        <div class = "inputlabel"> any of these words:</div>
+                    <div class = "input_space">
+                        <div class = "input_label"> any of these words:</div>
                         <div>
-                            <input type="text" name = "as_oq" class="inputtext">
+                            <input type="text" name = "as_oq" class="input_text">
                         </div>
                     </div>
-                    <div class = "label_space">
-                        <div class = "inputlabel"> none of these words:</div>
+                    <div class = "input_space">
+                        <div class = "input_label"> none of these words:</div>
                         <div>
-                            <input type="text" name = "as_eq" class="inputtext">
+                            <input type="text" name = "as_eq" class="input_text">
                         </div>
                     </div>
                 </div>
+
                 <div style="display: flex; width: max-content;">
-                    <div class="empty_one"></div>
-                    <div class = "advancebtn_space">
+                    <div class="empty_div"></div>
+                    <div class = "btn_space">
                         <div style="display: flex; justify-content: flex-end;">
-                            <input class = "advance_btn" value="Advanced Search" type="submit">
+                            <input class = "btn" value="Advanced Search" type="submit">
                         </div>
                     </div>  
                 </div>
             </div>
         </form>
 
-        <div class="divider"></div>
+        <div style = "border-bottom: 1px solid #3c4043;"></div>
         
     </body>
 </html>
