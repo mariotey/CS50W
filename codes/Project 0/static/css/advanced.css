@@ -11,23 +11,20 @@
     justify-content: space-between;
 }
 
-.google_space {
+.googleicon_space {
     display: inline-block;
     padding-left: 15px;
     line-height: normal;
     padding-left: 15px;
 }
 
-.google {
+.googleicon {
     width: 100px;
     padding-top: 50px;
     padding-bottom: 50px;
 }
 
-/*  */
-
-
-.advance_header {
+.advance_div {
     font-size: 20px;
     margin: 25px 35px;
     color: #f28b82;
@@ -38,6 +35,8 @@
     border-color: #3c4043;
     border-bottom: 1px solid #3c4043;
 }
+
+/*  */
 
 .advance_btn {
     background: #8ab4f8;

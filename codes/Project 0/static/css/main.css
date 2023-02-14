@@ -1,3 +1,8 @@
+.centralize {
+    display: flex;
+    justify-content: center;
+}
+
 .webpageOpt_space {
     display: inline-block;
     padding-left: 15px;

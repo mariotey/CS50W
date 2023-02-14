@@ -11,15 +11,15 @@
     justify-content: flex-end;
 }
 
+.googleicon {
+    width: 250px;
+    padding-top: 100px;
+    padding-bottom: 40px;
+}
 
 /*  */
 
-.centralize {
-    display: flex;
-    justify-content: center;
-    padding-top: 20px;
-    padding-bottom: 20px;
-}
+
 
 .searchbox_space {
     display: flex; 
