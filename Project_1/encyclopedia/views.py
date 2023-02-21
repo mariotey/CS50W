@@ -88,7 +88,6 @@ def edit_result(request):
         "textarea": new_text
     })
 
-
 def random_result(request):
     list_entries = util.list_entries()
     query = random.choice(list_entries)
