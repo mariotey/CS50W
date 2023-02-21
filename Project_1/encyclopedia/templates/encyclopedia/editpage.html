@@ -5,11 +5,14 @@
 {% endblock %}
 
 {% block body %}
-    <form action="{% url 'edit_result' %}", method="POST">
+    <form action="{% url 'save_edit' %}", method="POST">
         {% csrf_token %}
         <div>
-            {{ entry_content }}
+            {{ title }}
         </div>
-        <input type="submit" value = "Edit">
+        <div>
+            {{ textarea }}
+        </div>
+        <input type="submit" value = "Save">
     </form>
 {% endblock %}
