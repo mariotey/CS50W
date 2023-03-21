@@ -6,6 +6,7 @@ This course picks up where CS50x leaves off, diving more deeply into the design 
 This repository contains the assignments that the author has done previously for this module.
 - Project 0: HTML and CSS
 - Project 1: Django Webframe
+- Project 2: Django Webframe with SQL, Models and Migration
 
 ## Author ##
 Tey Ming Chuan
