@@ -11,6 +11,8 @@ def index(request):
         "activelist_objects": Listing.objects.all(),
     })
 
+###################################################################################################
+
 def login_view(request):
     if request.method == "POST":
 
@@ -59,7 +61,9 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "auctions/register.html")
-    
+
+################################################################################################### 
+   
 def create_list(request):
     if request.method == "POST":
         listing = Listing(
@@ -77,3 +81,12 @@ def create_list(request):
         return HttpResponseRedirect(reverse("index"))
 
     return render(request, "auctions/create_list.html")
+
+def view_list(request, name):    
+    listing = Listing.objects.get(title=name)
+
+    print(listing)
+
+    return render(request, "auctions/view_list.html",{
+        "view_list": listing,
+    })
