@@ -94,36 +94,37 @@ def view_list(request, name):
         "view_list": listing,
     })
 
-def addwatchlist(request,name):
-    if request.user.username:
-        w = WatchList()
-        w.user = request.user.username
-        w.listingid = name
-        w.save()
+# def addwatchlist(request,name):
+#     if request.user.username:
+#         w = WatchList()
+#         w.user = request.user.username
+#         w.listingid = name
+#         w.save()
         
-        return redirect('listingpage',HttpResponseRedirect(reverse("view_list",args=[name]), {
-            "view_list": Listing.objects.get(title=name),
-        }))
-    else:
-        return redirect('index')
+#         return redirect('listingpage',HttpResponseRedirect(reverse("view_list",args=[name]), {
+#             "view_list": Listing.objects.get(title=name),
+#         }))
+#     else:
+#         return redirect('index')
 
-def removewatchlist(request,listingid):
-    if request.user.username:
-        try:
-            w = WatchList.objects.get(user=request.user.username,listingid=listingid)
-            w.delete()
-            return redirect('listingpage',id=listingid)
-        except:
-            return redirect('listingpage',id=listingid)
-    else:
-        return redirect('index')
+# def removewatchlist(request,listingid):
+#     if request.user.username:
+#         try:
+#             w = WatchList.objects.get(user=request.user.username,listingid=listingid)
+#             w.delete()
+#             return redirect('listingpage',id=listingid)
+#         except:
+#             return redirect('listingpage',id=listingid)
+#     else:
+#         return redirect('index')
 
 
 def close_auc(request, name):
     listing = Listing.objects.get(title=name)
 
-    # listing.active_stat = False
-
+    listing.active_stat = False
+    listing.save()
+    
     return HttpResponseRedirect(reverse("view_list",args=[name]), {
         "view_list": listing,
     })
