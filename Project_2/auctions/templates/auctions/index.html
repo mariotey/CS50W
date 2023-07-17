@@ -6,16 +6,16 @@
     {% for listing in activelist_objects %}
 
     <div style="border: solid black 3px; display: flex; margin: 10px 0px 10px 0px">
-        <div style="width: 200px; height: 200px; display: flex; justify-content: center;">
-            <img src="{{ listing.image_url }}"/>
+        <div style="max-width: 250px; max-height: 200px; display: flex; justify-content: center; overflow: hidden;">
+            <img src="{{ listing.image_url }}" style="max-height: 100%"/>
         </div>
         
         <div style="margin: 10px 5px">
-            <h3><strong><a href = "/view_list/{{listing.title}}">{{listing.title}}</a></strong></h3>
+            <h3><strong><a href="/view_list/{{listing.title}}">{{listing.title}}</a></strong></h3>
             <div> <strong>Price: </strong>${{listing.start_bid}} </div>
             <div> {{listing.description}}</div><br>
 
-            <label> Created: </label>
+            <label> Created on: {{listing.created_datetime}}</label>
         </div>
     </div>
 

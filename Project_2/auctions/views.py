@@ -1,10 +1,11 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from .models import User, Listing, Bids, Comments
+from datetime import datetime
 
 def index(request):      
     return render(request, "auctions/index.html", {
@@ -52,7 +53,10 @@ def register(request):
         # Attempt to create new user
         try:
             user = User.objects.create_user(username, email, password)
+            user.watchlist = []
+
             user.save()
+
         except IntegrityError:
             return render(request, "auctions/register.html", {
                 "message": "Username already taken."
@@ -73,7 +77,8 @@ def create_list(request):
             image_url=request.POST["image_url"],
             start_bid=request.POST["start_bid"],
             active_stat = True,
-            creator=User.objects.get(username=request.user)
+            creator=User.objects.get(username=request.user),
+            created_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         )
 
         listing.save()
@@ -85,8 +90,42 @@ def create_list(request):
 def view_list(request, name):    
     listing = Listing.objects.get(title=name)
 
-    print(listing)
-
     return render(request, "auctions/view_list.html",{
         "view_list": listing,
     })
+
+def addwatchlist(request,name):
+    if request.user.username:
+        w = WatchList()
+        w.user = request.user.username
+        w.listingid = name
+        w.save()
+        
+        return redirect('listingpage',HttpResponseRedirect(reverse("view_list",args=[name]), {
+            "view_list": Listing.objects.get(title=name),
+        }))
+    else:
+        return redirect('index')
+
+def removewatchlist(request,listingid):
+    if request.user.username:
+        try:
+            w = WatchList.objects.get(user=request.user.username,listingid=listingid)
+            w.delete()
+            return redirect('listingpage',id=listingid)
+        except:
+            return redirect('listingpage',id=listingid)
+    else:
+        return redirect('index')
+
+
+def close_auc(request, name):
+    listing = Listing.objects.get(title=name)
+
+    # listing.active_stat = False
+
+    return HttpResponseRedirect(reverse("view_list",args=[name]), {
+        "view_list": listing,
+    })
+
+
