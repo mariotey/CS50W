@@ -15,3 +15,7 @@
 1. python -m django startproject "ProjectName"
 2. python manage.py runserver
 
+## Create App within Django Project
+1. navigate to Django Project respository
+2. python manage.py startapp "AppName"
+

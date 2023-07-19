@@ -1,3 +1,5 @@
+""" Describes what users see or what the webpage renders when they visit a particular route  """
+
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
@@ -7,6 +9,7 @@ from django.urls import reverse
 from .models import User, Listing, Bids, Comments
 from datetime import datetime
 
+# Default View
 def index(request):      
     return render(request, "auctions/index.html", {
         "activelist_objects": Listing.objects.all(),
@@ -62,7 +65,7 @@ def register(request):
                 "message": "Username already taken."
             })
         login(request, user)
-        return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect(reverse("auctions:index"))
     else:
         return render(request, "auctions/register.html")
 
@@ -125,7 +128,7 @@ def close_auc(request, name):
     listing.active_stat = False
     listing.save()
     
-    return HttpResponseRedirect(reverse("view_list",args=[name]), {
+    return HttpResponseRedirect(reverse("auctions:view_list",args=[name]), {
         "view_list": listing,
     })
 

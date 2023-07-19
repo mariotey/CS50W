@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'auctions',
+    'auctions', ## installed app on this particular Django project
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

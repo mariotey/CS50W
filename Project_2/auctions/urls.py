@@ -1,8 +1,14 @@
-from django.urls import path
+""" Table of Contents of all the URL paths web application can run """
+""" Tells what response to return when a particular URL is visited """
 
+from django.urls import path
 from . import views
 
+app_name = "auctions"
+
 urlpatterns = [
+    
+    # Giving a string name to a URL path makes it easier to reference it from other parts of the application 
     path("", views.index, name="index"),
     path("login/", views.login_view, name="login"),
     path("logout/", views.logout_view, name="logout"),
