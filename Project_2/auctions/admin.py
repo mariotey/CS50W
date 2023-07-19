@@ -3,7 +3,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .models import User, Listing, Bids
+from .models import User, Listing, Bid
 
 # Customizes how Admin App displays your models
 class ListAdmin(admin.ModelAdmin):
@@ -12,4 +12,4 @@ class ListAdmin(admin.ModelAdmin):
 # Register your models here.
 admin.site.register(User, UserAdmin)
 admin.site.register(Listing, ListAdmin)
-admin.site.register(Bids)
+admin.site.register(Bid)

@@ -17,20 +17,36 @@ class Listing(models.Model):
 
     def __str__(self):
         return f"{self.title}, {self.description}, {self.start_bid}, {self.creator}"
-
-class Bids(models.Model):
+    
+class Bid(models.Model):
+    list_title = models.CharField(max_length=64)
     bidder_name = models.ForeignKey(User, on_delete=models.CASCADE)
-    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
-    bid = models.IntegerField()
+    value = models.IntegerField()
 
     def __str__(self):
-        return f"{self.listing.title}, {self.bidder_name}, {self.bid}"
+        return f"{self.list_title}, {self.bidder_name}, {self.value}"
+
+# class WatchList(models.Model):
+#     list_title = models.ForeignKey(Listing, on_delete=models.CASCADE)
+#     watcher_name = models.ForeignKey(User, on_delete=models.CASCADE)
+
+#     def __str__(self):
+#         return f"{self.list_title}, {self.watcher_name}"
     
-# class Comments(models.Model):
+# class Comment(models.Model):
 #     commentor_name = models.ForeignKey(User, on_delete=models.CASCADE)
-#     listing = title = models.ForeignKey(Listing, on_delete=models.CASCADE)
+#     listing = models.CharField(max_length=64)
 #     comment = models.CharField(max_length=64)
 
 #     def __str__(self):
-#         return f"{self.id}, {self.creator}, {self.content}"
+#         return f"{self.commentor_name}, {self.listing}"
+
+class UserAssoc(models.Model):
+    username = models.ForeignKey(User, on_delete=models.CASCADE)
+    bids = models.ManyToManyField(Bid, blank=True)
+    # watchlists = models.ManyToManyField(Listing, blank=True)
+    # comments = models.ManyToManyField(Comment, blank=True)
+
+    # def __str__(self):
+    #     return f"{self.username}, {self.bids}, {self.watchlists}, {self.comments}"
 
