@@ -3,7 +3,6 @@ from django.db import models
 
 
 class User(AbstractUser):
-    # origin = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user")
     pass
 
 class Listing(models.Model):
@@ -20,19 +19,18 @@ class Listing(models.Model):
         return f"{self.title}, {self.description}, {self.start_bid}, {self.creator}"
 
 class Bids(models.Model):
-    bidder_name = models.CharField(max_length=64, primary_key=True)
-    title = models.CharField(max_length=64)
+    bidder_name = models.ForeignKey(User, on_delete=models.CASCADE)
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
     bid = models.IntegerField()
 
     def __str__(self):
-        return f"{self.title}, {self.bidder_name}, {self.bid}"
+        return f"{self.listing.title}, {self.bidder_name}, {self.bid}"
     
-class Comments(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    list_title = models.CharField(max_length=64)
-    creator = User.username
-    description = models.CharField(max_length=64)
+# class Comments(models.Model):
+#     commentor_name = models.ForeignKey(User, on_delete=models.CASCADE)
+#     listing = title = models.ForeignKey(Listing, on_delete=models.CASCADE)
+#     comment = models.CharField(max_length=64)
 
-    def __str__(self):
-        return f"{self.id}, {self.creator}, {self.content}"
+#     def __str__(self):
+#         return f"{self.id}, {self.creator}, {self.content}"
 
