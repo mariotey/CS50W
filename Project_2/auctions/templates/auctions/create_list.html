@@ -3,7 +3,7 @@
 {% block body %}
     <h2>Create Listing</h2>
 
-    <form action= "{% url 'create_list' %}" method ="POST">
+    <form action= "{% url 'auctions:create_list' %}" method ="POST">
         {% csrf_token %}
         <input type="text" name="title" placeholder="Listing Title"><br>
         <input type="text" name="description" placeholder="Description"><br>
