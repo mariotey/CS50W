@@ -57,18 +57,21 @@
   
     <!-- Display all previous comments -->
     <div><strong>Comments</strong></div>
+    
+    {% for comment in comments %}
+        <div style="border: solid grey 1px; margin: 5px;"> 
+            <div style="display: flex; justify-content: space-between">
+                <div style = "margin: 0px 10px 0px 10px;"><strong> {{ comment.commentor_name }}</strong></div>
+                <div style = "margin: 0px 10px 0px 10px;"> Posted on {{ comment.commented_datetime }}</div>
+            </div>
 
-    <div style="border: solid grey 1px; margin: 5px;"> 
-        <div style="display: flex; justify-content: space-between">
-            <div style = "margin: 0px 10px 0px 10px;"><strong>Mariotey</strong></div>
-            <div style = "margin: 0px 10px 0px 10px;">Posted on 25th July</div>
+            <div style = "margin: 5px 10px 5px 10px;"><em>{{ comment.comment }}</em></div>
         </div>
-
-        <div style = "margin: 5px 10px 5px 10px;"><em>LOL LMAO</em></div>
-    </div>
+    {% endfor %}
 
     <!-- Users should be able to add comments to the listing page -->
-    <form style="border: solid black 3px; margin: 15px 5px 5px 5px; display: flex; justify-content: space-between; overflow: hidden;">
+    <form style="border: solid black 3px; margin: 15px 5px 5px 5px; display: flex; justify-content: space-between; overflow: hidden;" action = "/comment/{{view_list.title}}" method = "POST">
+        {% csrf_token %}
         <input type="text" name="comment" placeholder="Add a Comment" style = "width: 100%;">
         <button type ="submit"> Comment </button>
     </form>

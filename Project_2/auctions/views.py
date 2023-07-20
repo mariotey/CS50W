@@ -3,10 +3,11 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
+from django.utils import timezone
 
-from .models import User, Listing, Bid, WatchList
+from .models import User, Listing, Bid, WatchList, Comment
 from datetime import datetime
 
 # Default View
@@ -92,10 +93,12 @@ def create_list(request):
 
 def view_list(request, title):    
     listing = Listing.objects.get(title=title)
+    comments = listing.comments.all()
 
     return render(request, "auctions/view_list.html",{
         "view_list": listing,
-        "watchlists": WatchList.objects.filter(watcher_name=request.user).values_list('listing__title', flat=True)
+        "watchlists": WatchList.objects.filter(watcher_name=request.user).values_list('listing__title', flat=True),
+        "comments": comments
     })
 
 def close_auc(request, title):
@@ -106,7 +109,8 @@ def close_auc(request, title):
     
     return HttpResponseRedirect(reverse("auctions:view_list",args=[title]), {
         "view_list": listing,
-        "watchlists": WatchList.objects.filter(watcher_name=request.user).values_list('listing__title', flat=True)
+        "watchlists": WatchList.objects.filter(watcher_name=request.user).values_list('listing__title', flat=True),
+        "comments": listing.comments.all()
     })
 
 ################################################################################################### 
@@ -135,6 +139,8 @@ def bid(request, title):
 
     return HttpResponseRedirect(reverse("auctions:view_list",args=[title]), {
         "view_list": listing,
+        "watchlists": WatchList.objects.filter(watcher_name=request.user).values_list('listing__title', flat=True),
+        "comments": listing.comments.all()
     })
 
 ################################################################################################### 
@@ -161,7 +167,29 @@ def mod_watchlist(request,title):
 
     return HttpResponseRedirect(reverse("auctions:view_list",args=[title]), {
         "view_list": listing,
-        "watchlists": WatchList.objects.filter(watcher_name=request.user).values_list('listing__title', flat=True)
+        "watchlists": WatchList.objects.filter(watcher_name=request.user).values_list('listing__title', flat=True),
+        "comments": listing.comments.all()
     })
       
 ################################################################################################### 
+
+def comment(request, title):
+    if request.method == "POST":
+        comment = Comment(
+            commentor_name = request.user,
+            list_title = title,
+            comment = request.POST["comment"],
+            commented_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        )
+
+        comment.save()
+
+        listing = Listing.objects.get(title=title)
+        listing.comments.add(comment)
+
+        return render(request, "auctions/view_list.html",{
+            "view_list": listing,
+            "watchlists": WatchList.objects.filter(watcher_name=request.user).values_list('listing__title', flat=True),
+            "comments": listing.comments.all()
+        })
+        

@@ -27,4 +27,8 @@ urlpatterns = [
     # Watchlist Paths
     path("watchlist/", views.watchlist, name="watchlist"),
     path("watchlist/<str:title>",views.mod_watchlist,name="mod_watchlist"),
+
+    # Comment Paths
+    path("comment/<str:title>", views.comment, name="comment"),
+
 ]
