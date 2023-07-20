@@ -113,16 +113,23 @@ def bid(request, title):
     if request.method == "POST":
         listing = Listing.objects.get(title=title)
         
-        bid = Bid(
-            listing = listing,
-            bidder = User.objects.get(username=request.user),
-            value = request.POST["bid_value"]
-        )
-        bid.save()
+        try:
+            bid = Bid.objects.get(listing = listing.title)
+            bid.bidder = User.objects.get(username=request.user)
+            bid.value = int(request.POST["bid_value"])
+
+        except:
+            bid = Bid(
+                listing = listing.title,
+                bidder = User.objects.get(username=request.user),
+                value = int(request.POST["bid_value"])
+            )
 
         listing.bid_counter += 1
-        listing.bid_value = request.POST["bid_value"]
+        listing.bid_value = int(request.POST["bid_value"])
+        
         listing.save()
+        bid.save()
 
     return HttpResponseRedirect(reverse("auctions:view_list",args=[title]), {
         "view_list": listing,
