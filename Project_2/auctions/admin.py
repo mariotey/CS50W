@@ -7,7 +7,7 @@ from .models import User, Listing, Bid
 
 # Customizes how Admin App displays your models
 class ListAdmin(admin.ModelAdmin):
-    list_display = ("title", "description", "category", "start_bid", "creator")
+    list_display = ("title", "description", "category", "bid_value", "creator")
 
 # Register your models here.
 admin.site.register(User, UserAdmin)

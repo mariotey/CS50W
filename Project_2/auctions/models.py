@@ -12,19 +12,20 @@ class Listing(models.Model):
     description = models.CharField(max_length=64)
     category = models.CharField(max_length=64)
     image_url = models.CharField(max_length=500)
-    start_bid = models.IntegerField()
+    bid_value = models.IntegerField()
+    bid_counter = models.IntegerField(default=1)
     active_stat = models.BooleanField()  
-
+    
     def __str__(self):
-        return f"{self.title}, {self.description}, {self.start_bid}, {self.creator}"
+        return f"{self.title}, {self.description}, {self.bid_value}, {self.creator}"
     
 class Bid(models.Model):
-    list_title = models.CharField(max_length=64)
-    bidder_name = models.ForeignKey(User, on_delete=models.CASCADE)
+    listing = models.CharField(max_length=64)
+    bidder = models.ForeignKey(User, on_delete=models.CASCADE)
     value = models.IntegerField()
 
     def __str__(self):
-        return f"{self.list_title}, {self.bidder_name}, {self.value}"
+        return f"{self.listing}, {self.bidder}, {self.value}"
 
 # class WatchList(models.Model):
 #     list_title = models.ForeignKey(Listing, on_delete=models.CASCADE)

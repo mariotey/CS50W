@@ -78,7 +78,7 @@ def create_list(request):
             description=request.POST["description"],
             category=request.POST["category"],
             image_url=request.POST["image_url"],
-            start_bid=request.POST["start_bid"],
+            bid_value=request.POST["start_bid"],
             active_stat = True,
             creator=User.objects.get(username=request.user),
             created_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -90,10 +90,41 @@ def create_list(request):
 
     return render(request, "auctions/create_list.html")
 
-def view_list(request, name):    
-    listing = Listing.objects.get(title=name)
+def view_list(request, title):    
+    listing = Listing.objects.get(title=title)
 
     return render(request, "auctions/view_list.html",{
+        "view_list": listing,
+    })
+
+def close_auc(request, title):
+    listing = Listing.objects.get(title=title)
+
+    listing.active_stat = False
+    listing.save()
+    
+    return HttpResponseRedirect(reverse("auctions:view_list",args=[title]), {
+        "view_list": listing,
+    })
+
+################################################################################################### 
+
+def bid(request, title):
+    if request.method == "POST":
+        listing = Listing.objects.get(title=title)
+        
+        bid = Bid(
+            listing = listing,
+            bidder = User.objects.get(username=request.user),
+            value = request.POST["bid_value"]
+        )
+        bid.save()
+
+        listing.bid_counter += 1
+        listing.bid_value = request.POST["bid_value"]
+        listing.save()
+
+    return HttpResponseRedirect(reverse("auctions:view_list",args=[title]), {
         "view_list": listing,
     })
 
@@ -120,16 +151,3 @@ def view_list(request, name):
 #             return redirect('listingpage',id=listingid)
 #     else:
 #         return redirect('index')
-
-
-def close_auc(request, name):
-    listing = Listing.objects.get(title=name)
-
-    listing.active_stat = False
-    listing.save()
-    
-    return HttpResponseRedirect(reverse("auctions:view_list",args=[name]), {
-        "view_list": listing,
-    })
-
-

@@ -11,15 +11,16 @@
 
     <div>{{ view_list.description }}</div><br>
 
-    <div style="font-size: 30px; font-weight: bolder;">${{ view_list.start_bid }}</div>
+    <div style="font-size: 30px; font-weight: bolder;">${{ view_list.bid_value }}</div>
 
     <div>{{ view_list.bid_counter }} bid(s) so far.</div>
 
     <!-- Upon sign in, user should be able to bid item, add or remove from Watchlist -->
     {% if view_list.active_stat == True %}
-        <form style="display: flex;">
+        <form style="display: flex;" action="/bid/{{view_list.title}}" method="POST">
+            {% csrf_token %}
             <div>
-                <input type="number" min="{{view_list.start_bid}}">
+                <input type="number" min="{{view_list.bid_value}}" name="bid_value">
             </div>
             <div style="width: 150px; margin: 0px 10px 0px 10px;">
                 <button type="submit" style="margin-bottom: 5px"> Place Bid </button>

@@ -9,13 +9,23 @@ app_name = "auctions"
 urlpatterns = [
     
     # Giving a string name to a URL path makes it easier to reference it from other parts of the application 
+    
+    # User Login Paths
     path("", views.index, name="index"),
     path("login/", views.login_view, name="login"),
     path("logout/", views.logout_view, name="logout"),
     path("register/", views.register, name="register"),
+
+    # Listing Paths
     path("create_list/", views.create_list, name="create_list"),
-    path("view_list/<str:name>", views.view_list, name="view_list"),
+    path("view_list/<str:title>", views.view_list, name="view_list"),
+    path("close_auc/<str:title>", views.close_auc, name="close_auc"),
+
+    # Biding Paths
+    path("bid/<str:title>", views.bid, name="bid"),
+
+
     # path("addwatchlist/<str:name>",views.addwatchlist,name="addwatchlist"),
     # path("removewatchlist/<str:name>",views.removewatchlist,name="removewatchlist"),
-    path("close_auc/<str:name>", views.close_auc, name="close_auc"),
+    
 ]
