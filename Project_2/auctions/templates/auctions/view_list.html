@@ -38,9 +38,13 @@
         {% endif %}
 
         <br>
-        
+    
     {% else %}
+        <!-- Upon sign in, if item is created by the user, they can "close" the auction, making the highest bidder the winner and the listing becomes unavailable -->
         <div> The auction has been closed </div>
+
+        <!-- Upon sign in, if the user won the auction, the closed page would say so -->
+
     {% endif %}
 
     <br>
@@ -48,13 +52,27 @@
     <div><strong>Details</strong></div>
     <li> Listed by: {{ view_list.creator }} </li>
     <li> Category: {{ view_list.category }} </li> 
- 
-    <!-- Upon sign in, if item is created by the user, they can "close" the auction, making the highest bidder the winner and the listing becomes unavailable -->
-  
 
-    <!-- Upon sign in, if the user won the auction, the closed page would say so -->
-    
+    <br>
+  
+    <!-- Display all previous comments -->
+    <div><strong>Comments</strong></div>
+
+    <div style="border: solid grey 1px; margin: 5px;"> 
+        <div style="display: flex; justify-content: space-between">
+            <div style = "margin: 0px 10px 0px 10px;"><strong>Mariotey</strong></div>
+            <div style = "margin: 0px 10px 0px 10px;">Posted on 25th July</div>
+        </div>
+
+        <div style = "margin: 5px 10px 5px 10px;"><em>LOL LMAO</em></div>
+    </div>
+
     <!-- Users should be able to add comments to the listing page -->
+    <form style="border: solid black 3px; margin: 15px 5px 5px 5px; display: flex; justify-content: space-between; overflow: hidden;">
+        <input type="text" name="comment" placeholder="Add a Comment" style = "width: 100%;">
+        <button type ="submit"> Comment </button>
+    </form>
+
 
 {% endblock %}
 

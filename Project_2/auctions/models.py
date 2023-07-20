@@ -34,10 +34,11 @@ class WatchList(models.Model):
     def __str__(self):
         return f"{self.listing.title}, {self.watcher_name}"
     
-# class Comment(models.Model):
-#     commentor_name = models.ForeignKey(User, on_delete=models.CASCADE)
-#     listing = models.CharField(max_length=64)
-#     comment = models.CharField(max_length=64)
+class Comment(models.Model):
+    commentor_name = models.ForeignKey(User, on_delete=models.CASCADE)
+    listing = models.CharField(max_length=64)
+    comment = models.CharField(max_length=64)
+    commented_datetime = models.DateTimeField()
 
-#     def __str__(self):
-#         return f"{self.commentor_name}, {self.listing}"
+    def __str__(self):
+        return f"{self.commentor_name}, {self.listing}"
