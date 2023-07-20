@@ -95,6 +95,7 @@ def view_list(request, title):
 
     return render(request, "auctions/view_list.html",{
         "view_list": listing,
+        "watchlists": WatchList.objects.filter(watcher_name=request.user).values_list('listing__title', flat=True)
     })
 
 def close_auc(request, title):
@@ -105,6 +106,7 @@ def close_auc(request, title):
     
     return HttpResponseRedirect(reverse("auctions:view_list",args=[title]), {
         "view_list": listing,
+        "watchlists": WatchList.objects.filter(watcher_name=request.user).values_list('listing__title', flat=True)
     })
 
 ################################################################################################### 
@@ -159,6 +161,7 @@ def mod_watchlist(request,title):
 
     return HttpResponseRedirect(reverse("auctions:view_list",args=[title]), {
         "view_list": listing,
+        "watchlists": WatchList.objects.filter(watcher_name=request.user).values_list('listing__title', flat=True)
     })
       
 ################################################################################################### 
