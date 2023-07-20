@@ -105,6 +105,8 @@ def close_auc(request, title):
     listing = Listing.objects.get(title=title)
 
     listing.active_stat = False
+    listing.bid_winner=str(Bid.objects.get(listing=title).bidder)
+
     listing.save()
     
     return HttpResponseRedirect(reverse("auctions:view_list",args=[title]), {
@@ -187,9 +189,10 @@ def comment(request, title):
         listing = Listing.objects.get(title=title)
         listing.comments.add(comment)
 
-        return render(request, "auctions/view_list.html",{
+        return HttpResponseRedirect(reverse("auctions:view_list",args=[title]), {
             "view_list": listing,
             "watchlists": WatchList.objects.filter(watcher_name=request.user).values_list('listing__title', flat=True),
             "comments": listing.comments.all()
         })
+
         

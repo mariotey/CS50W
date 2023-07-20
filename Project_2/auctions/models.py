@@ -22,6 +22,7 @@ class Listing(models.Model):
     category = models.CharField(max_length=64)
     image_url = models.CharField(max_length=500)
     bid_value = models.IntegerField(default=0)
+    bid_winner = models.CharField(max_length=64, default="")
     bid_counter = models.IntegerField(default=1)
     active_stat = models.BooleanField(default=True)  
     comments = models.ManyToManyField(Comment, blank=True, related_name = "comments")
