@@ -12,9 +12,9 @@ class Listing(models.Model):
     description = models.CharField(max_length=64)
     category = models.CharField(max_length=64)
     image_url = models.CharField(max_length=500)
-    bid_value = models.IntegerField()
+    bid_value = models.IntegerField(default=0)
     bid_counter = models.IntegerField(default=1)
-    active_stat = models.BooleanField()  
+    active_stat = models.BooleanField(default=True)  
     
     def __str__(self):
         return f"{self.title}, {self.description}, {self.bid_value}, {self.creator}"
@@ -27,12 +27,12 @@ class Bid(models.Model):
     def __str__(self):
         return f"{self.listing}, {self.bidder}, {self.value}"
 
-# class WatchList(models.Model):
-#     list_title = models.ForeignKey(Listing, on_delete=models.CASCADE)
-#     watcher_name = models.ForeignKey(User, on_delete=models.CASCADE)
+class WatchList(models.Model):
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
+    watcher_name = models.CharField(max_length=64)
 
-#     def __str__(self):
-#         return f"{self.list_title}, {self.watcher_name}"
+    def __str__(self):
+        return f"{self.listing.title}, {self.watcher_name}"
     
 # class Comment(models.Model):
 #     commentor_name = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -41,13 +41,3 @@ class Bid(models.Model):
 
 #     def __str__(self):
 #         return f"{self.commentor_name}, {self.listing}"
-
-class UserAssoc(models.Model):
-    username = models.ForeignKey(User, on_delete=models.CASCADE)
-    bids = models.ManyToManyField(Bid, blank=True)
-    # watchlists = models.ManyToManyField(Listing, blank=True)
-    # comments = models.ManyToManyField(Comment, blank=True)
-
-    # def __str__(self):
-    #     return f"{self.username}, {self.bids}, {self.watchlists}, {self.comments}"
-

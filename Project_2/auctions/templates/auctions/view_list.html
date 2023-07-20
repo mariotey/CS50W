@@ -27,10 +27,10 @@
             </div>
         </form>
 
-        <button style = "margin-bottom: 5px"> Add to Watchlist </button>
+        <a href="/watchlist/{{view_list.title}}"><button style = "margin-bottom: 5px"> Add to Watchlist </button></a>
 
         {% if view_list.creator.username == user.username %}  
-        <a href="/close_auc/{{view_list.title}}"><button>Close Auction</button></a>
+            <a href="/close_auc/{{view_list.title}}"><button>Close Auction</button></a>
         {% endif %}
 
         <br>

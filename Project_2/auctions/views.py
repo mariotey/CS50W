@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from .models import User, Listing, Bid
+from .models import User, Listing, Bid, WatchList
 from datetime import datetime
 
 # Default View
@@ -135,26 +135,30 @@ def bid(request, title):
         "view_list": listing,
     })
 
-# def addwatchlist(request,name):
-#     if request.user.username:
-#         w = WatchList()
-#         w.user = request.user.username
-#         w.listingid = name
-#         w.save()
-        
-#         return redirect('listingpage',HttpResponseRedirect(reverse("view_list",args=[name]), {
-#             "view_list": Listing.objects.get(title=name),
-#         }))
-#     else:
-#         return redirect('index')
+################################################################################################### 
+def view_watchlist(request):
+    watchlists = WatchList.objects.filter(watcher_name=request.user)
 
-# def removewatchlist(request,listingid):
-#     if request.user.username:
-#         try:
-#             w = WatchList.objects.get(user=request.user.username,listingid=listingid)
-#             w.delete()
-#             return redirect('listingpage',id=listingid)
-#         except:
-#             return redirect('listingpage',id=listingid)
-#     else:
-#         return redirect('index')
+    return render(request, "auctions/watchlist.html",{
+        "watchlists": watchlists,
+    })
+
+def watchlist(request,title):
+    listing = Listing.objects.get(title=title)
+    
+    try:
+        watchlist = WatchList.objects.get(listing=listing)
+        watchlist.delete()
+    except:
+        watchlist = WatchList(
+            listing = listing,
+            watcher_name = request.user
+        )
+
+        watchlist.save()
+
+    return HttpResponseRedirect(reverse("auctions:view_list",args=[title]), {
+        "view_list": listing,
+    })
+      
+################################################################################################### 

@@ -1,0 +1,26 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Watchlist</h2>
+
+    {% for listing in watchlists %}
+        <div style="border: solid black 3px; display: flex; margin: 10px 0px 10px 0px">
+            <div style="max-width: 250px; max-height: 200px; display: flex; justify-content: center; overflow: hidden;">
+                <img src="{{ listing.listing.image_url }}" style="max-height: 100%"/>
+            </div>
+            
+            <div style="margin: 10px 5px">
+                <h3><strong><a href="/view_list/{{listing.listing.title}}">{{listing.listing.title}}</a></strong></h3>
+                <div> <strong>Price: </strong>${{listing.listing.bid_value}} </div>
+                <div> {{listing.listing.description}}</div><br>
+
+                <label> Created on: {{listing.listing.created_datetime}}</label>
+            </div>
+        </div>
+
+    {% empty %}
+        <div> No items on watch... </div>
+        
+    {% endfor %}
+
+{% endblock %}
