@@ -136,14 +136,14 @@ def bid(request, title):
     })
 
 ################################################################################################### 
-def view_watchlist(request):
+def watchlist(request):
     watchlists = WatchList.objects.filter(watcher_name=request.user)
 
     return render(request, "auctions/watchlist.html",{
         "watchlists": watchlists,
     })
 
-def watchlist(request,title):
+def mod_watchlist(request,title):
     listing = Listing.objects.get(title=title)
     
     try:
