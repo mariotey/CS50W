@@ -31,4 +31,7 @@ urlpatterns = [
     # Comment Paths
     path("comment/<str:title>", views.comment, name="comment"),
 
+    # Category Paths
+    path("category/", views.category, name="category"),
+    path("category/<str:category>", views.view_cat, name ="view_cat")
 ]

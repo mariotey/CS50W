@@ -195,4 +195,24 @@ def comment(request, title):
             "comments": listing.comments.all()
         })
 
-        
+################################################################################################### 
+
+def category(request):
+    category_list = []
+
+    for listing in Listing.objects.all():
+        category_list.append(str(listing.category))
+
+    category_list=list(set(category_list))
+
+    return render(request, "auctions/categories.html",{
+        "categories": category_list
+    })
+
+def view_cat(request, category):
+    listings = Listing.objects.filter(category=category)
+
+    return render(request, "auctions/cat_list.html", {
+        "category": category,
+        "listings": listings
+    })

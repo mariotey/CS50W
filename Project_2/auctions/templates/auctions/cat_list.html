@@ -1,0 +1,24 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Listings categorised under "{{category}}"</h2>
+    
+    {% for listing in listings %}
+
+    <div style="border: solid black 3px; display: flex; margin: 10px 0px 10px 0px">
+        <div style="max-width: 250px; max-height: 200px; display: flex; justify-content: center; overflow: hidden;">
+            <img src="{{ listing.image_url }}" style="max-height: 100%"/>
+        </div>
+        
+        <div style="margin: 10px 5px">
+            <h3><strong><a href="/view_list/{{listing.title}}">{{listing.title}}</a></strong></h3>
+            <div> <strong>Price: </strong>${{listing.bid_value}} </div>
+            <div> {{listing.description}}</div><br>
+
+            <label> Created on: {{listing.created_datetime}}</label>
+        </div>
+    </div>
+
+    {% endfor %}
+    
+{% endblock %}
