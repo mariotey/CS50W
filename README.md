@@ -5,17 +5,10 @@ This course picks up where CS50x leaves off, diving more deeply into the design 
 
 This repository contains the assignments that the author has done previously for this module.
 
-### Project 0 ### 
-Designed a front-end for Google Search, Google Image Search and Google Advanced Search with HTML and CSS
-
-### Project 1 ###
-Designed a Wikipedia-like online encyclopedia with Django Webframe
-
-### Project 2 ###
-Designed an eBay-like e-commerce auction site that will allow users to post auction listings, place bids on listings, comment on those listings, and add listings to a “watchlist”, utilizing Django Webframe with SQL, Models and Migration
-
-### Project 3 ###
-Designed a front-end for an email client that makes API calls to send and receive emails, utilizing Django Webframe with JavaScript
+- Project 0: Designed a front-end for Google Search, Google Image Search and Google Advanced Search with HTML and CSS
+- Project 1: Designed a Wikipedia-like online encyclopedia with Django Webframe
+- Project 2: Designed an eBay-like e-commerce auction site with auctioning, bidding, commenting and adding to "watchlist" capabilities, utilizing Django Webframe with SQL, Models and Migration
+- Project 3: Designed a front-end for an email client that makes API calls to send and receive emails, utilizing Django Webframe with JavaScript
 
 ## Author ##
 Tey Ming Chuan
