@@ -11,9 +11,10 @@
     <a class="btn btn-sm btn-outline-primary" href="{% url 'logout' %}">Log Out</a>
     <hr>
 
-    <div id="emails-view">
-    </div>
+    <!-- Contains the content of an email mailbox -->
+    <div id="emails-view"></div>
 
+    <!-- Contains a form where user can compose a new email -->
     <div id="compose-view">
         <h3>New Email</h3>
         <form id="compose-form">
@@ -27,9 +28,10 @@
                 <input class="form-control" id="compose-subject" placeholder="Subject">
             </div>
             <textarea class="form-control" id="compose-body" placeholder="Body"></textarea>
-            <input type="submit" class="btn btn-primary"/>
+            <input type="submit" class="btn btn-primary" />
         </form>
     </div>
+
 {% endblock %}
 
 {% block script %}
