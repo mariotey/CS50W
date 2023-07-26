@@ -25,11 +25,10 @@ function load_mailbox(mailbox) {
   
   fetch(`/emails/${mailbox}`)
   .then(response => response.json())
-  .then(result => {
-    console.log(`GET /emails/${mailbox}`);
-    console.log(result);
-  })
   .then(emails => {
+    console.log(`GET /emails/${mailbox}`);
+    console.log(emails);
+
     emails.forEach(email => {
       const email_elem = document.createElement("div");
       email_elem.style.cssText =`
@@ -85,39 +84,17 @@ function compose_email() {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-function sent_email(event){
-
-  // Post email to API route
-  // fetch('/emails' , {
-  //     method: 'POST',
-  //     body: JSON.stringify({
-  //         recipients: document.querySelector('#compose-recipients').value,
-  //         subject: document.querySelector('#compose-subject').value,
-  //         body: document.querySelector('#compose-body').value
-  //     })
-  // })
-  // .then(response => response.json())
-  // .then(result => {
-  //     // Print result
-  //     console.log("POST /emails");
-  //     console.log(result);
-  // })
-  // .catch(error => {
-  //     // Handle any errors that occurred during the fetch
-  //     console.error('Error:', error);
-  // });
-
+function sent_email(event){  
   fetch('/emails', {
     method: 'POST',
     body: JSON.stringify({
-        recipients: 'tey.mingchuan@yahoo.com.sg',
-        subject: 'Meeting time',
-        body: 'How about we meet tomorrow at 3pm?'
+        recipients: document.querySelector('#compose-recipients').value, 
+        subject: document.querySelector('#compose-subject').value,
+        body: document.querySelector('#compose-body').value
     })
   })
-  .then(response => response.json())
-  .then(result => {
-      // Print result
-      console.log(result);
+  .catch(error => {
+    // Handle any errors that occurred during the fetch
+    console.error('Error:', error);
   });
 }
