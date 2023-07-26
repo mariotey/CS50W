@@ -32,8 +32,67 @@
         </form>
     </div>
 
+    <div id = "message-view">
+        <div id="message_sender"></div>
+        <div id="message_recipients"></div>
+        <div id="message_subject"></div>
+        <div id="message_timestamp"></div>
+        <br>
+        <div id = message_btns style = "display: flex;">
+            <button class="btn btn-sm btn-outline-primary" id="reply">Reply</button> &nbsp;
+            <button class="btn btn-sm btn-outline-primary" id="archive"></button>
+        </div>
+        <hr>
+        <div id="message_body"></div>
+    </div>
+
 {% endblock %}
 
 {% block script %}
+    <script>
+        function render_email(email_id, mailbox){
+        document.querySelector('#compose-view').style.display = 'none';
+        document.querySelector('#emails-view').style.display = 'none';
+        document.querySelector('#message-view').style.display = 'block';
+        
+        fetch(`/emails/${email_id}`)
+        .then(response => response.json())
+        .then(email => {
+            console.log(email.read);
+
+            if (!email.read){
+            fetch(`/emails/${email_id}`, {
+                method: 'PUT',
+                body: JSON.stringify({
+                    read: true
+                })
+            })
+            .catch(error => {
+                console.error('Error updating email status:', error);
+            });
+            }
+
+            document.querySelector('#message_sender').innerHTML = "<strong>From: </strong>" + email.sender;
+            document.querySelector('#message_recipients').innerHTML = "<strong>To: </strong>" +email.recipients;
+            document.querySelector('#message_subject').innerHTML = "<strong>Subject: </strong>" +email.subject;
+            document.querySelector('#message_timestamp').innerHTML = "<strong>Timestamp: </strong>" +email.timestamp;
+            document.querySelector('#message_body').innerHTML = email.body;
+
+            if (mailbox === "inbox"){
+                document.querySelector('#reply').style.display = "block";
+            }
+            else{
+                document.querySelector('#reply').style.display = "none";
+            }
+
+            if (!email.archived) {
+                document.querySelector('#archive').innerHTML = "Archive";
+            }
+            else{
+                document.querySelector('#archive').innerHTML = "Unarchive";
+            }
+        })
+    }
+    </script>    
     <script src="{% static 'mail/inbox.js' %}"></script>
 {% endblock %}
