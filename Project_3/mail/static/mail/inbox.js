@@ -41,23 +41,22 @@ function load_mailbox(mailbox) {// parameters: inbox, sent, archive
         email_elem.style.cssText = email_elem.style.cssText + "background-color: lightgray;"
       }
 
-      if (mailbox === "inbox") {
-        email_elem.innerHTML = `
-          <div style="display: flex">
-            <div style="width:250px; margin: 5px;">
-              <strong>${email.sender}</strong>
-            </div>
-            <div style="width:250px; margin: 5px;">${email.subject}</div>
-          </div>
-          <div style="margin: 5px;">${email.timestamp}</div>
-        `;
-      };
-
       if (mailbox === "sent") {
         email_elem.innerHTML = `
           <div style="display: flex">
             <div style="width:250px; margin: 5px;">
               <strong>${email.recipients}</strong>
+            </div>
+            <div style="width:250px; margin: 5px;">${email.subject}</div>
+          </div>
+          <div style="margin: 5px;">${email.timestamp}</div>
+        `;
+      }
+      else {
+        email_elem.innerHTML = `
+          <div style="display: flex">
+            <div style="width:250px; margin: 5px;">
+              <strong>${email.sender}</strong>
             </div>
             <div style="width:250px; margin: 5px;">${email.subject}</div>
           </div>

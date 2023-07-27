@@ -50,36 +50,26 @@
 
 {% block script %}
     <script>
-    function archive_email(email_id){
-        if (document.querySelector("#archive").innerHTML == "Archive"){
-            document.querySelector("#archive").innerHTML = "Unarchive";
-
-            fetch(`/emails/${email_id}`, {
-                method: 'PUT',
-                body: JSON.stringify({
-                    archived: true
-                })
+    function archive_email(email_id, archive_stat, mailbox){
+        fetch(`/emails/${email_id}`, {
+            method: 'PUT',
+            body: JSON.stringify({
+                archived: !archive_stat
             })
-            .catch(error => {
-                console.error('Error updating email status:', error);
-            });
-        }
-        else{
-            document.querySelector("#archive").innerHTML = "Archive";
-
-            fetch(`/emails/${email_id}`, {
-                method: 'PUT',
-                body: JSON.stringify({
-                    archived: false
-                })
-            })
-            .catch(error => {
-                console.error('Error updating email status:', error);
-            });
-        }
+        })
+        .then(response => {
+            if (response.ok) {
+                render_email(email_id, mailbox);
+            }
+            else{
+                console.log("Failed to update email status.");
+            }
+        })
+        .catch(error => {
+            console.error('Error updating email status:', error);
+        });
     }
 
-    
     function render_email(email_id, mailbox){
         document.querySelector('#compose-view').style.display = 'none';
         document.querySelector('#emails-view').style.display = 'none';
@@ -88,7 +78,7 @@
         fetch(`/emails/${email_id}`)
         .then(response => response.json())
         .then(email => {
-            console.log(email.read);
+            console.log(email);
 
             if (!email.read){
                 fetch(`/emails/${email_id}`, {
@@ -114,18 +104,18 @@
             else{
                 document.querySelector('#reply').style.display = "none";
             }
-
+            
             if (!email.archived) {
                 document.querySelector('#archive').innerHTML = "Archive";
             }
             else{
                 document.querySelector('#archive').innerHTML = "Unarchive";
             }
-            
-            document.querySelector('#archive').addEventListener('click', function() {
-                archive_email(email_id);
-            });
-        })
+
+            document.querySelector('#archive').onclick = function(){
+                archive_email(email.id, email.archived, mailbox);
+            };
+        });
     }
     </script>    
     <script src="{% static 'mail/inbox.js' %}"></script>
