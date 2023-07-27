@@ -98,23 +98,10 @@
             document.querySelector('#message_timestamp').innerHTML = "<strong>Timestamp: </strong>" +email.timestamp;
             document.querySelector('#message_body').innerHTML = email.body;
 
-            if (mailbox === "inbox"){
-                document.querySelector('#reply').style.display = "block";
-            }
-            else{
-                document.querySelector('#reply').style.display = "none";
-            }
+            document.querySelector('#reply').style.display = mailbox === "inbox" ? "block" : "none";
             
-            if (!email.archived) {
-                document.querySelector('#archive').innerHTML = "Archive";
-            }
-            else{
-                document.querySelector('#archive').innerHTML = "Unarchive";
-            }
-
-            document.querySelector('#archive').onclick = function(){
-                archive_email(email.id, email.archived, mailbox);
-            };
+            document.querySelector('#archive').innerHTML = email.archived ? "Unarchive" : "Archive";
+            document.querySelector('#archive').onclick = () => archive_email(email.id, email.archived, mailbox);
         });
     }
     </script>    
