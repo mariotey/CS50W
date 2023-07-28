@@ -50,8 +50,8 @@
 
 {% block script %}
     <script>
-    function archive_email(email_id, archive_stat, mailbox){
-        fetch(`/emails/${email_id}`, {
+    function archive_email(email, archive_stat, mailbox){
+        fetch(`/emails/${email.id}`, {
             method: 'PUT',
             body: JSON.stringify({
                 archived: !archive_stat
@@ -59,15 +59,29 @@
         })
         .then(response => {
             if (response.ok) {
-                render_email(email_id, mailbox);
+                load_mailbox("inbox");
             }
             else{
                 console.log("Failed to update email status.");
             }
         })
         .catch(error => {
-            console.error('Error updating email status:', error);
+            // Handle any errors that occurred during the fetch
+            console.error('Error:', error);
         });
+    }
+
+    function reply_email(email) {       
+        // Show compose view and hide other views
+        document.querySelector('#compose-view').style.display = 'block';
+        document.querySelector('#emails-view').style.display = 'none';
+        document.querySelector('#message-view').style.display = 'none';
+
+
+        // Clear out composition fields
+        document.querySelector('#compose-recipients').value = email.sender;
+        document.querySelector('#compose-subject').value = `Re: ${email.subject}`;
+        document.querySelector('#compose-body').value = `On ${email.timestamp} ${email.sender} wrote: \n ${email.body}`;
     }
 
     function render_email(email_id, mailbox){
@@ -98,10 +112,25 @@
             document.querySelector('#message_timestamp').innerHTML = "<strong>Timestamp: </strong>" +email.timestamp;
             document.querySelector('#message_body').innerHTML = email.body;
 
-            document.querySelector('#reply').style.display = mailbox === "inbox" ? "block" : "none";
-            
-            document.querySelector('#archive').innerHTML = email.archived ? "Unarchive" : "Archive";
-            document.querySelector('#archive').onclick = () => archive_email(email.id, email.archived, mailbox);
+            if (mailbox === "inbox") {
+                document.querySelector('#reply').style.display = "block";
+                document.querySelector('#reply').onclick = () => reply_email(email);
+
+                document.querySelector('#archive').style.display = "block";
+                document.querySelector('#archive').innerHTML = email.archived ? "Unarchive" : "Archive";
+                document.querySelector('#archive').onclick = () => archive_email(email, email.archived, mailbox);
+            }
+            else if (mailbox === "archive"){
+                document.querySelector('#reply').style.display = "none";
+                
+                document.querySelector('#archive').style.display = "block";
+                document.querySelector('#archive').innerHTML = email.archived ? "Unarchive" : "Archive";
+                document.querySelector('#archive').onclick = () => archive_email(email, email.archived, mailbox);
+            }
+            else {
+                document.querySelector('#reply').style.display = "none";
+                document.querySelector('#archive').style.display = "none";
+            }           
         });
     }
     </script>    

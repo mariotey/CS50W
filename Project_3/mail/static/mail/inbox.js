@@ -101,6 +101,14 @@ function sent_email(event){
         body: document.querySelector('#compose-body').value
     })
   })
+  .then(response => {
+      if (response.ok) {
+          load_mailbox("sent");
+      }
+      else{
+          console.log("Failed to send email.");
+      }
+  })
   .catch(error => {
     // Handle any errors that occurred during the fetch
     console.error('Error:', error);
