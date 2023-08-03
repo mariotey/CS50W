@@ -44,16 +44,6 @@
         <div class="body">
             {% block heading %}
             {% endblock %}
-            
-            <div style = "margin: 20px 20px 20px 20px; border: solid gray 2px; border-radius: 5px; padding: 20px 20px 20px 20px;"> 
-                <strong style = "font-size: 20px;">New Post</strong>
-                <form action = "{% url 'network:submitpost' %}" method = "POST">
-                    {% csrf_token %}
-                    <textarea id = "post_input" name = "post_input" rows="3" style = "border-radius: 3px; width: 100%; padding: 5px 5px 5px 5px;" placeholder="Write your post here..."></textarea> 
-                    <button type = "submit" style = "border-radius: 5px; background-color: #0062ccc9; color: white;"> Post</button>
-                </form>
-        
-            </div>
 
             {% block body %}
             {% endblock %}
