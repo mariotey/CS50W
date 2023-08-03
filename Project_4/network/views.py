@@ -100,11 +100,15 @@ def follow_user(request, name):
 
     return HttpResponseRedirect(reverse("network:user_profile", args=[name]))
 
+#################################################################################################
+
 def following(request):
     user = get_object_or_404(User, username=request.user)
 
+    #"following_users" is a queryset of user objects and cannot be directly used as a value in the creator field filter.
     following_users = user.following.all()
 
+    # "__in" lookup is used to filter posts whose creator is one of the users in the "following_users" queryset
     return render(request, "network/following.html", {
         "following_posts": Post.objects.filter(creator__in=following_users).order_by('created_datetime'),
     })
