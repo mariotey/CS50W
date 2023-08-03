@@ -10,8 +10,8 @@
 {% block body %}
     <div style = "margin: 20px 20px 20px 20px; font-size: 25px;">
         <div> <strong>{{user.username}}</strong> </div>
-        <div> Followers: {{user.followers}} </div>
-        <div> Following: {{user.following}} </div>
+        <div> Followers: {{user.followers.all.count}} </div>
+        <div> Following: {{user.following.all.count}} </div>
 
         {% if request.user != user %}
             <button> Follow/Unfollow </button>

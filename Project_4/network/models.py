@@ -3,8 +3,8 @@ from django.db import models
 
 
 class User(AbstractUser):
-    followers = models.IntegerField(default=0)
-    following = models.IntegerField(default=0)
+    followers = models.ManyToManyField("self", symmetrical=False, blank=True, related_name="followers_users")
+    following = models.ManyToManyField("self", symmetrical=False, blank=True, related_name="following_users")
 
 class Comment(models.Model):
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
