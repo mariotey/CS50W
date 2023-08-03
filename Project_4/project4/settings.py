@@ -120,3 +120,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Configures DEFAULT_AUTO_FIELD setting to point to a subclass of AutoField,
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

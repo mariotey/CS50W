@@ -99,3 +99,12 @@ def follow_user(request, name):
     follower.save()
 
     return HttpResponseRedirect(reverse("network:user_profile", args=[name]))
+
+def following(request):
+    user = get_object_or_404(User, username=request.user)
+
+    following_users = user.following.all()
+
+    return render(request, "network/following.html", {
+        "following_posts": Post.objects.filter(creator__in=following_users).order_by('created_datetime'),
+    })

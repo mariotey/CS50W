@@ -2,31 +2,14 @@
 
 {% block heading %} 
     <div style = "margin: 20px 20px 20px 20px; font-size: 25px;">
-        <strong>User Profile</strong>
+        <strong>Following Posts</strong>
     </div>
 
 {% endblock %}
 
 {% block body %}
-    <div style = "margin: 20px 20px 20px 20px; font-size: 25px;">
-        <div> <strong>{{user.username}}</strong> </div>
-        <div> Followers: {{user.followers.all.count}} </div>
-        <div> Following: {{user.following.all.count}} </div>
-        
-        {% if request.user.username != user.username %}
-            <button>
-                <a href="{% url 'network:follow_user' user.username %}">
-                    {% if request.user not in user.followers.all %}
-                        Follow
-                    {% else %}
-                        Unfollow
-                    {% endif %}
-                </a>
-            </button>
-        {% endif %}
-    </div> 
-
-    {% for post in posts %} 
+    {% for post in following_posts %} 
+    
         <div style = "margin: 20px 20px 20px 20px; border: solid gray 2px; border-radius: 5px; padding: 20px 20px 20px 20px;">
             <strong><a href = "user/{{post.creator}}"> {{post.creator}} </a></strong>
             {% if request.user == post.creator %}
@@ -40,5 +23,4 @@
             <div> Comment </div>
         </div>
     {% endfor %}
- 
 {% endblock %}
