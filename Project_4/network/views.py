@@ -83,3 +83,19 @@ def user_profile(request, name):
         "user": user,
         "posts": Post.objects.filter(creator=user).order_by("-created_datetime"),
     })
+
+def follow_user(request, name):
+    follower = get_object_or_404(User, username=request.user)
+    following = get_object_or_404(User, username=name)
+    
+    if not follower.following.filter(pk=following.pk).exists():
+        follower.following.add(following)
+        following.followers.add(follower)    
+    else:
+        follower.following.remove(following)
+        following.followers.remove(follower)
+
+    follower.save()
+    follower.save()
+
+    return HttpResponseRedirect(reverse("network:user_profile", args=[name]))

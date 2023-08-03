@@ -14,5 +14,6 @@ urlpatterns = [
     path("submit", views.submitpost, name="submitpost"),
 
     path("<str:name>", views.user_profile, name="user_profile"),
+    path("follow/<str:name>", views.follow_user, name="follow_user"),
 ]
 

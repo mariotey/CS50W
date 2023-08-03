@@ -12,16 +12,22 @@
         <div> <strong>{{user.username}}</strong> </div>
         <div> Followers: {{user.followers.all.count}} </div>
         <div> Following: {{user.following.all.count}} </div>
-
-        {% if request.user != user %}
-            <button> Follow/Unfollow </button>
-        {% endif %}
+        
+        <button>
+            <a href="follow/{{ user.username }}">
+                {% if request.user not in user.followers.all %}
+                    Follow
+                {% else %}
+                    Unfollow
+                {% endif %}
+            </a>
+        </button>
     </div> 
 
     {% for post in posts %} 
         <div style = "margin: 20px 20px 20px 20px; border: solid gray 2px; border-radius: 5px; padding: 20px 20px 20px 20px;">
             <strong><a href = "/{{post.creator}}"> {{post.creator}} </a></strong>
-            {% if user == post.creator %}
+            {% if request.user == post.creator %}
                 <div>
                     <a href = "#"> Edit </a>
                 </div>
