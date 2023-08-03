@@ -20,21 +20,21 @@
                     </li>
                 {% endif %}
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'index' %}">All Posts</a>
+                  <a class="nav-link" href="{% url 'network:index' %}">All Posts</a>
                 </li>
                 {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="#">Following</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                        <a class="nav-link" href="{% url 'network:logout' %}">Log Out</a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                        <a class="nav-link" href="{% url 'network:login' %}">Log In</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                        <a class="nav-link" href="{% url 'network:register' %}">Register</a>
                     </li>
                 {% endif %}
               </ul>
@@ -42,6 +42,19 @@
           </nav>
         
         <div class="body">
+            {% block heading %}
+            {% endblock %}
+            
+            <div style = "margin: 20px 20px 20px 20px; border: solid gray 2px; border-radius: 5px; padding: 20px 20px 20px 20px;"> 
+                <strong style = "font-size: 20px;">New Post</strong>
+                <form action = "{% url 'network:submitpost' %}" method = "POST">
+                    {% csrf_token %}
+                    <textarea id = "post_input" name = "post_input" rows="3" style = "border-radius: 3px; width: 100%; padding: 5px 5px 5px 5px;" placeholder="Write your post here..."></textarea> 
+                    <button type = "submit" style = "border-radius: 5px; background-color: #0062ccc9; color: white;"> Post</button>
+                </form>
+        
+            </div>
+
             {% block body %}
             {% endblock %}
         </div>

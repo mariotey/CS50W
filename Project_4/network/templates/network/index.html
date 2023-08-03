@@ -1,5 +1,25 @@
 {% extends "network/layout.html" %}
 
+{% block heading %} 
+    <div style = "margin: 20px 20px 20px 20px; font-size: 25px;">
+        <strong>All Post</strong>
+    </div>
+{% endblock %}
+
 {% block body %}
-    TODO
+    {% for post in active_posts %} 
+        <div style = "margin: 20px 20px 20px 20px; border: solid gray 2px; border-radius: 5px; padding: 20px 20px 20px 20px;">
+            <strong> {{post.creator}} </strong>
+            {% if post.creator == request.user %}
+                <div>
+                    <ahref> Edit </ahref>
+                </div>
+            {% endif %}
+            <div> {{post.content}} </div>
+            <div> {{post.created_datetime}} </div>
+            <div> {{post.likes}}</div>
+            <div> Comment </div>
+        </div>
+    {% endfor %}
+
 {% endblock %}

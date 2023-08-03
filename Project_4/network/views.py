@@ -4,12 +4,14 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User
+from datetime import datetime
 
+from .models import User, Post
 
 def index(request):
-    return render(request, "network/index.html")
-
+    return render(request, "network/index.html", {
+        "active_posts": Post.objects.all().order_by("-created_datetime"),
+    })
 
 def login_view(request):
     if request.method == "POST":
@@ -30,11 +32,9 @@ def login_view(request):
     else:
         return render(request, "network/login.html")
 
-
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
-
 
 def register(request):
     if request.method == "POST":
@@ -61,3 +61,17 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "network/register.html")
+
+#################################################################################################
+
+def submitpost(request):
+    if request.method == "POST":
+        post = Post(
+            creator = request.user,
+            content = request.POST["post_input"],
+            created_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        )
+
+        post.save()
+
+    return HttpResponseRedirect(reverse("network:index"))
