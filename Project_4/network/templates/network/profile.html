@@ -27,7 +27,7 @@
 
     {% for post in posts %} 
         <div style = "margin: 20px 20px 20px 20px; border: solid gray 2px; border-radius: 5px; padding: 20px 20px 20px 20px;">
-            <strong><a href = "user/{{post.creator}}"> {{post.creator}} </a></strong>
+            <strong> {{post.creator}} </strong>
             {% if request.user == post.creator %}
                 <div>
                     <a href = "#"> Edit </a>
@@ -40,4 +40,22 @@
         </div>
     {% endfor %}
  
+{% endblock %}
+
+{% block paginator %}
+    <div style="display:flex; justify-content: center;">
+        {% if posts.has_previous %}
+        <a href="?page=1">&laquo; &nbsp; First &nbsp; </a>
+        <a href="?page={{ posts.previous_page_number }}">&nbsp; Previous &nbsp;</a>
+        {% endif %}
+
+        <span class="current">
+            &nbsp; Page {{ posts.number }} of {{ posts.paginator.num_pages }} &nbsp;
+        </span>
+
+        {% if posts.has_next %}
+        <a href="?page={{ posts.next_page_number }}">&nbsp; Next &nbsp;</a>
+        <a href="?page={{ posts.paginator.num_pages }}">&nbsp; Last &nbsp; &raquo;</a>
+        {% endif %}
+    </div>
 {% endblock %}

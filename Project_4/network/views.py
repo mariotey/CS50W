@@ -3,14 +3,19 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
+from django.core.paginator import Paginator
 
 from datetime import datetime
 
 from .models import User, Post
 
 def index(request):
+    paginator = Paginator(Post.objects.all().order_by("-created_datetime"), 10)
+    page = request.GET.get("page")
+
     return render(request, "network/index.html", {
         "active_posts": Post.objects.all().order_by("-created_datetime"),
+        "posts": paginator.get_page(page)
     })
 
 def login_view(request):
@@ -78,10 +83,13 @@ def submitpost(request):
 
 def user_profile(request, name):
     user = get_object_or_404(User, username=name)
+
+    paginator = Paginator(Post.objects.filter(creator=user).order_by("-created_datetime"), 10)
+    page = request.GET.get("page")
     
     return render(request, "network/profile.html", {
         "user": user,
-        "posts": Post.objects.filter(creator=user).order_by("-created_datetime"),
+        "posts": paginator.get_page(page),
     })
 
 def follow_user(request, name):
@@ -107,8 +115,10 @@ def following(request):
 
     #"following_users" is a queryset of user objects and cannot be directly used as a value in the creator field filter.
     following_users = user.following.all()
-
     # "__in" lookup is used to filter posts whose creator is one of the users in the "following_users" queryset
+    paginator = Paginator(Post.objects.filter(creator__in=following_users).order_by('created_datetime'), 10)
+    page = request.GET.get("page")
+
     return render(request, "network/following.html", {
-        "following_posts": Post.objects.filter(creator__in=following_users).order_by('created_datetime'),
+        "posts": paginator.get_page(page),
     })

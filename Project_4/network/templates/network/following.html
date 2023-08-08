@@ -1,34 +1,54 @@
 {% extends "network/layout.html" %}
 
-{% block heading %} 
-    <div style = "margin: 20px 20px 20px 20px; font-size: 25px;">
-        <strong>Following Posts</strong>
-    </div>
+{% block heading %}
+<div style="margin: 20px 20px 20px 20px; font-size: 25px;">
+    <strong>Following Posts</strong>
+</div>
 
-    <div style = "margin: 20px 20px 20px 20px; border: solid gray 2px; border-radius: 5px; padding: 20px 20px 20px 20px;"> 
-        <strong style = "font-size: 20px;">New Post</strong>
-        <form action = "{% url 'network:submitpost' %}" method = "POST">
-            {% csrf_token %}
-            <textarea id = "post_input" name = "post_input" rows="3" style = "border-radius: 3px; width: 100%; padding: 5px 5px 5px 5px;" placeholder="Write your post here..."></textarea> 
-            <button type = "submit" style = "border-radius: 5px; background-color: #0062ccc9; color: white;"> Post</button>
-        </form>
-    </div>
+<div style="margin: 20px 20px 20px 20px; border: solid gray 2px; border-radius: 5px; padding: 20px 20px 20px 20px;">
+    <strong style="font-size: 20px;">New Post</strong>
+    <form action="{% url 'network:submitpost' %}" method="POST">
+        {% csrf_token %}
+        <textarea id="post_input" name="post_input" rows="3"
+            style="border-radius: 3px; width: 100%; padding: 5px 5px 5px 5px;"
+            placeholder="Write your post here..."></textarea>
+        <button type="submit" style="border-radius: 5px; background-color: #0062ccc9; color: white;"> Post</button>
+    </form>
+</div>
 {% endblock %}
 
 {% block body %}
-    {% for post in following_posts %} 
-    
-        <div style = "margin: 20px 20px 20px 20px; border: solid gray 2px; border-radius: 5px; padding: 20px 20px 20px 20px;">
-            <strong><a href = "user/{{post.creator}}"> {{post.creator}} </a></strong>
-            {% if request.user == post.creator %}
-                <div>
-                    <a href = "#"> Edit </a>
-                </div>
-            {% endif %}
-            <div> {{post.content}} </div>
-            <div> {{post.created_datetime}} </div>
-            <div> {{post.likes}}</div>
-            <div> Comment </div>
-        </div>
-    {% endfor %}
+{% for post in posts %}
+
+<div style="margin: 20px 20px 20px 20px; border: solid gray 2px; border-radius: 5px; padding: 20px 20px 20px 20px;">
+    <strong><a href="user/{{post.creator}}"> {{post.creator}} </a></strong>
+    {% if request.user == post.creator %}
+    <div>
+        <a href="#"> Edit </a>
+    </div>
+    {% endif %}
+    <div> {{post.content}} </div>
+    <div> {{post.created_datetime}} </div>
+    <div> {{post.likes}}</div>
+    <div> Comment </div>
+</div>
+{% endfor %}
+{% endblock %}
+
+{% block paginator %}
+    <div style="display:flex; justify-content: center;">
+        {% if posts.has_previous %}
+        <a href="?page=1">&laquo; &nbsp; First &nbsp; </a>
+        <a href="?page={{ posts.previous_page_number }}">&nbsp; Previous &nbsp;</a>
+        {% endif %}
+
+        <span class="current">
+            &nbsp; Page {{ posts.number }} of {{ posts.paginator.num_pages }} &nbsp;
+        </span>
+
+        {% if posts.has_next %}
+        <a href="?page={{ posts.next_page_number }}">&nbsp; Next &nbsp;</a>
+        <a href="?page={{ posts.paginator.num_pages }}">&nbsp; Last &nbsp; &raquo;</a>
+        {% endif %}
+    </div>
 {% endblock %}
