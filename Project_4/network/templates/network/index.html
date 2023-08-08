@@ -71,6 +71,27 @@
             document.querySelector("#edit_" + id).style.display = "block";
 
             // Fetch request
+            fetch("/saveEditedPost",{
+                method: "POST",
+                headers:{
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    "id": id,
+                    "data": contentdiv.innerHTML
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(JSON.stringify({
+                    "id": id,
+                    "data": contentdiv.innerHTML
+                }));
+                console.log("Response from server:", data);
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
         }
     </script>
 {% endblock %}

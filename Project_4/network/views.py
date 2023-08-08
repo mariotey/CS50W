@@ -1,13 +1,14 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.core.paginator import Paginator
-
+from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
-
 from .models import User, Post
+
+import json
 
 def index(request):
     paginator = Paginator(Post.objects.all().order_by("-created_datetime"), 10)
@@ -122,3 +123,32 @@ def following(request):
     return render(request, "network/following.html", {
         "posts": paginator.get_page(page),
     })
+
+#################################################################################################
+
+@csrf_exempt 
+def updatepost_content(request):
+    if request.method == "POST":
+        try:
+            # Parse JSON data from the request body
+            data = json.loads(request.body)  
+            
+            post = Post.objects.get(pk = int(data["id"]))
+            post.content = data["data"]
+
+            post.save()
+            
+            # Process the data 
+            response_data = {"message": "Database updated successfully", "data":{
+                'id': post.id,
+                'creator': post.creator.username,
+                'content': post.content,
+                'created_datetime': post.created_datetime.strftime('%Y-%m-%d %H:%M:%S'),
+                'likes': post.likes,
+            }}
+
+            return JsonResponse(response_data)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=400)
+    else:
+        return JsonResponse({"error": "Invalid request method"}, status=405)
