@@ -1,115 +1,182 @@
 {% extends "network/layout.html" %}
 
 {% block heading %}
-    <div style="margin: 20px 20px 20px 20px; font-size: 25px;">
-        <strong>All Post</strong>
-    </div>
+<div style="margin: 20px 20px 20px 20px; font-size: 25px;">
+    <strong>All Post</strong>
+</div>
 
-    <div style="margin: 20px 20px 20px 20px; border: solid gray 2px; border-radius: 5px; padding: 20px 20px 20px 20px;">
-        <strong style="font-size: 20px;">New Post</strong>
-        <form action="{% url 'network:submitpost' %}" method="POST">
-            {% csrf_token %}
-            <textarea id="post_input" name="post_input" rows="3"
-                style="border-radius: 3px; width: 100%; padding: 5px 5px 5px 5px;"
-                placeholder="Write your post here..."></textarea>
-            <button type="submit" style="border-radius: 5px; background-color: #0062ccc9; color: white;"> Post</button>
-        </form>
-    </div>
+<div style="margin: 20px 20px 20px 20px; border: solid gray 2px; border-radius: 5px; padding: 20px 20px 20px 20px;">
+    <strong style="font-size: 20px;">New Post</strong>
+    <form action="{% url 'network:submitpost' %}" method="POST">
+        {% csrf_token %}
+        <textarea id="post_input" name="post_input" rows="3"
+            style="border-radius: 3px; width: 100%; padding: 5px 5px 5px 5px;"
+            placeholder="Write your post here..."></textarea>
+        <button type="submit" style="border-radius: 5px; background-color: #0062ccc9; color: white;"> Post</button>
+    </form>
+</div>
+
+<script>
+
+
+</script>>
 {% endblock %}
 
 {% block body %}
-    {% for post in posts %}
-        <div style="margin: 20px 20px 20px 20px; border: solid gray 2px; border-radius: 5px; padding: 20px 20px 20px 20px;">
-            <h5 style="text-decoration:underline;"><a href="user/{{post.creator}}"> {{post.creator}} </a></h5>
-            {% if post.creator == request.user %}
-            <div id = "edit_{{post.id}}"onclick = "editPost('{{post.id}}')">
-                <a href ="#"> Edit </a>
-            </div>
-            {% endif %}
-            <div id = "postcontent_{{post.id}}"> {{post.content}} </div>
-            <div> {{post.created_datetime}} </div>
-            &nbsp;
-            <div> {{post.likes}}</div>
-            <div> Comment </div>
+{% for post in posts %}
+<div style="margin: 20px 20px 20px 20px; border: solid gray 2px; border-radius: 5px; padding: 20px 20px 20px 20px;">
+    <h5 style="text-decoration:underline;"><a href="user/{{post.creator}}"> {{post.creator}} </a></h5>
+    {% if post.creator == request.user %}
+    <div id="edit_{{post.id}}" onclick="editPost('{{post.id}}')">
+        <a href="#"> Edit </a>
+    </div>
+    {% endif %}
+    <div id="postcontent_{{post.id}}"> {{post.content}} </div>
+    <div> {{post.created_datetime}} </div>
+    &nbsp;
+    <div style="display:flex;">
+        <div id="like_{{post.id}}" style="margin-top:-3px;">
+            <img src="./static/network/img/like.jpg" />
         </div>
-    {% endfor %}
+        <div id="likecount_{{post.id}}"> {{post.likes}}</div>
+    </div>
+    <div> Comment </div>
+</div>
+{% endfor %}
 
-    <script>
-        function editPost(id) {
-            contentdiv = document.querySelector("#postcontent_" + id);
-            initialContent = contentdiv.innerHTML;
-            contentdiv.innerHTML = '';
-            document.querySelector("#edit_" + id).style.display = "none";
+<script>
+    function editPost(id) {
+        contentdiv = document.querySelector("#postcontent_" + id);
+        initialContent = contentdiv.innerHTML;
+        contentdiv.innerHTML = '';
+        document.querySelector("#edit_" + id).style.display = "none";
 
-            // Replaces the div innerHTML with the textarea component
-            var textarea = document.createElement('textarea');
-            textarea.value = initialContent;
-            textarea.style.width = "100%";
-            
-            // Renders the button for saving post
-            var saveBtn = document.createElement('button');
-            saveBtn.innerText = 'Save';
-            saveBtn.onclick = function() {
-                saveEditedPost(id,contentdiv, textarea);
-            };
-            
-            // Renders the button if user cancels edit
-            var cancelBtn = document.createElement('button');
-            cancelBtn.innerText = 'Cancel';
-            cancelBtn.onclick = function() {
-                contentdiv.innerHTML = initialContent;
-                document.querySelector("#edit_" + id).style.display = "block";
-            };
+        // Replaces the div innerHTML with the textarea component
+        var textarea = document.createElement('textarea');
+        textarea.value = initialContent;
+        textarea.style.width = "100%";
 
-            contentdiv.append(textarea);
-            contentdiv.appendChild(saveBtn);
-            contentdiv.appendChild(cancelBtn);
-        }
+        // Renders the button for saving post
+        var saveBtn = document.createElement('button');
+        saveBtn.innerText = 'Save';
+        saveBtn.onclick = function () {
+            saveEditedPost(id, contentdiv, textarea);
+        };
 
-        function saveEditedPost(id, contentdiv, textarea) {
-            contentdiv.innerHTML = textarea.value;
+        // Renders the button if user cancels edit
+        var cancelBtn = document.createElement('button');
+        cancelBtn.innerText = 'Cancel';
+        cancelBtn.onclick = function () {
+            contentdiv.innerHTML = initialContent;
             document.querySelector("#edit_" + id).style.display = "block";
+        };
 
-            // Fetch request
-            fetch("/saveEditedPost",{
-                method: "POST",
-                headers:{
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    "id": id,
-                    "data": contentdiv.innerHTML
-                })
+        contentdiv.append(textarea);
+        contentdiv.appendChild(saveBtn);
+        contentdiv.appendChild(cancelBtn);
+    }
+
+    function saveEditedPost(id, contentdiv, textarea) {
+        contentdiv.innerHTML = textarea.value;
+        document.querySelector("#edit_" + id).style.display = "block";
+
+        // Fetch request
+        fetch("/saveEditedPost", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "id": id,
+                "data": contentdiv.innerHTML
             })
-            .then(response => response.json())
-            .then(data => {
-                console.log(JSON.stringify({
-                    "id": id,
-                    "data": contentdiv.innerHTML
-                }));
-                console.log("Response from server:", data);
-            })
-            .catch(error => {
-                console.error("Error:", error);
-            });
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(JSON.stringify({
+                "id": id,
+                "data": contentdiv.innerHTML
+            }));
+            console.log("Response from server:", data);
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+    }
+
+    let isLikePost = true;
+
+    function updateLikes(likeElm) {
+        if (likeElm.disabled) return;
+        
+        likeElm.disabled = true;
+        id = likeElm.id.match(/\d+/)[0]
+
+        dict_data = {"id": id}
+
+        //  Add a like
+        if (isLikePost) {
+            // console.log("Add a like for " + likeElm.id);
+            dict_data["like_post"] = true
+        } 
+        // Remove a like
+        else {
+            // console.log("Remove a like for " + likeElm.id);
+            dict_data["like_post"] = false
         }
-    </script>
+
+        // console.log(dict_data);
+
+        // Fetch and update request
+        fetch("/updateLikes", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dict_data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Response from server:", data);
+            document.querySelector("#likecount_" + id).textContent = data.data.likes; // Update the like count
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+
+        isLikePost = !isLikePost;
+        likeElm.disabled = false;
+    }
+
+    // If onclick="likePost('{{post.id}}')" is used on the Div, it means that the first click 
+    // event triggers the likePost function and attaches the event listener, but it doesn't 
+    // actually execute the toggleFunctions logic for the first click.
+    document.addEventListener('DOMContentLoaded', function() {
+        const likeElms = document.querySelectorAll('[id^="like_"]');
+        likeElms.forEach(elm => {
+            elm.addEventListener('click', function () {
+                updateLikes(elm);
+            });
+        });
+    });
+
+</script>
 {% endblock %}
 
 {% block paginator %}
-    <div style = "display:flex; justify-content: center;">
-        {% if posts.has_previous %}
-        <a href="?page=1">&laquo; &nbsp; First &nbsp; </a>
-        <a href="?page={{ posts.previous_page_number }}">&nbsp; Previous &nbsp;</a>
-        {% endif %}
+<div style="display:flex; justify-content: center;">
+    {% if posts.has_previous %}
+    <a href="?page=1">&laquo; &nbsp; First &nbsp; </a>
+    <a href="?page={{ posts.previous_page_number }}">&nbsp; Previous &nbsp;</a>
+    {% endif %}
 
-        <span class="current">
-            &nbsp; Page {{ posts.number }} of {{ posts.paginator.num_pages }} &nbsp;
-        </span>
+    <span class="current">
+        &nbsp; Page {{ posts.number }} of {{ posts.paginator.num_pages }} &nbsp;
+    </span>
 
-        {% if posts.has_next %}
-        <a href="?page={{ posts.next_page_number }}">&nbsp; Next &nbsp;</a>
-        <a href="?page={{ posts.paginator.num_pages }}">&nbsp; Last &nbsp; &raquo;</a>
-        {% endif %}
-    </div>
+    {% if posts.has_next %}
+    <a href="?page={{ posts.next_page_number }}">&nbsp; Next &nbsp;</a>
+    <a href="?page={{ posts.paginator.num_pages }}">&nbsp; Last &nbsp; &raquo;</a>
+    {% endif %}
+</div>
 {% endblock %}

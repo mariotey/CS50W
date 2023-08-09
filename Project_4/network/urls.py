@@ -17,6 +17,7 @@ urlpatterns = [
     path("user/<str:name>", views.user_profile, name="user_profile"),
     path("follow_posts/", views.following, name="follow_posts"),
 
-    path("saveEditedPost", views.updatepost_content, name="updatepost"),
+    path("saveEditedPost", views.update_postcontent, name="updatepost"),
+    path("updateLikes", views.update_likes, name = "update_likes")
 ]
 

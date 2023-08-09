@@ -127,7 +127,7 @@ def following(request):
 #################################################################################################
 
 @csrf_exempt 
-def updatepost_content(request):
+def update_postcontent(request):
     if request.method == "POST":
         try:
             # Parse JSON data from the request body
@@ -146,8 +146,41 @@ def updatepost_content(request):
                 'created_datetime': post.created_datetime.strftime('%Y-%m-%d %H:%M:%S'),
                 'likes': post.likes,
             }}
-
             return JsonResponse(response_data)
+        
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=400)
+    else:
+        return JsonResponse({"error": "Invalid request method"}, status=405)
+
+#################################################################################################
+
+@csrf_exempt 
+def update_likes(request):
+    if request.method == "POST":
+        try:
+            # Parse JSON data from the request body
+            data = json.loads(request.body)  
+
+            post = Post.objects.get(pk = int(data["id"]))
+            
+            if data["like_post"]:
+                post.likes += 1
+            else:
+                post.likes -= 1
+
+            post.save()
+            
+            # Process the data 
+            response_data = {"message": "Database updated successfully", "data":{
+                'id': post.id,
+                'creator': post.creator.username,
+                'content': post.content,
+                'created_datetime': post.created_datetime.strftime('%Y-%m-%d %H:%M:%S'),
+                'likes': post.likes,
+            }}
+            return JsonResponse(response_data)
+        
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=400)
     else:

@@ -18,21 +18,16 @@
 {% endblock %}
 
 {% block body %}
-{% for post in posts %}
-
-<div style="margin: 20px 20px 20px 20px; border: solid gray 2px; border-radius: 5px; padding: 20px 20px 20px 20px;">
-    <strong><a href="user/{{post.creator}}"> {{post.creator}} </a></strong>
-    {% if request.user == post.creator %}
-    <div>
-        <a href="#"> Edit </a>
-    </div>
-    {% endif %}
-    <div> {{post.content}} </div>
-    <div> {{post.created_datetime}} </div>
-    <div> {{post.likes}}</div>
-    <div> Comment </div>
-</div>
-{% endfor %}
+    {% for post in posts %}
+        <div style="margin: 20px 20px 20px 20px; border: solid gray 2px; border-radius: 5px; padding: 20px 20px 20px 20px;">
+            <h5 style="text-decoration:underline;"><a href="user/{{post.creator}}"> {{post.creator}} </a></h5>
+            <div id = "postcontent_{{post.id}}"> {{post.content}} </div>
+            <div> {{post.created_datetime}} </div>
+            &nbsp;
+            <div> {{post.likes}}</div>
+            <div> Comment </div>
+        </div>
+    {% endfor %}
 {% endblock %}
 
 {% block paginator %}
