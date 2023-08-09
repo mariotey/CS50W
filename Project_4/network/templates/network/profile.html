@@ -36,76 +36,20 @@
             <div id = "postcontent_{{post.id}}"> {{post.content}} </div>
             <div> {{post.created_datetime}} </div>
             &nbsp;
-            <div> {{post.likes}}</div>
+            <div style="display:flex;">
+                <div id="like_{{post.id}}" style="margin-top:-3px;">
+                    <img src="/static/network/img/like.jpg"/>
+                </div>
+                <div id="likecount_{{post.id}}"> {{post.likes}}</div>
+            </div>
             <div> Comment </div>
         </div>
     {% endfor %}
 
-    <script>
-        function editPost(id) {
-            contentdiv = document.querySelector("#postcontent_" + id);
-            initialContent = contentdiv.innerHTML;
-            contentdiv.innerHTML = '';
-            document.querySelector("#edit_" + id).style.display = "none";
-
-            // Replaces the div innerHTML with the textarea component
-            var textarea = document.createElement('textarea');
-            textarea.value = initialContent;
-            textarea.style.width = "100%";
-            
-            // Renders the button for saving post
-            var saveBtn = document.createElement('button');
-            saveBtn.innerText = 'Save';
-            saveBtn.onclick = function() {
-                saveEditedPost(id,contentdiv, textarea);
-            };
-            
-            // Renders the button if user cancels edit
-            var cancelBtn = document.createElement('button');
-            cancelBtn.innerText = 'Cancel';
-            cancelBtn.onclick = function() {
-                contentdiv.innerHTML = initialContent;
-                document.querySelector("#edit_" + id).style.display = "block";
-            };
-
-            contentdiv.append(textarea);
-            contentdiv.appendChild(saveBtn);
-            contentdiv.appendChild(cancelBtn);
-        }
-
-        function saveEditedPost(id, contentdiv, textarea) {
-            contentdiv.innerHTML = textarea.value;
-            document.querySelector("#edit_" + id).style.display = "block";
-
-            // Fetch request
-            fetch("/saveEditedPost",{
-                method: "POST",
-                headers:{
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    "id": id,
-                    "data": contentdiv.innerHTML
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(JSON.stringify({
-                    "id": id,
-                    "data": contentdiv.innerHTML
-                }));
-                console.log("Response from server:", data);
-            })
-            .catch(error => {
-                console.error("Error:", error);
-            });
-        }
-    </script>
- 
 {% endblock %}
 
 {% block paginator %}
-    <div style="display:flex; justify-content: center;">
+    <div style="display:flex; justify-content: center; margin: 20px 20px 20px 20p">
         {% if posts.has_previous %}
         <a href="?page=1">&laquo; &nbsp; First &nbsp; </a>
         <a href="?page={{ posts.previous_page_number }}">&nbsp; Previous &nbsp;</a>

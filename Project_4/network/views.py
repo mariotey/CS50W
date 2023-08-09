@@ -15,7 +15,6 @@ def index(request):
     page = request.GET.get("page")
 
     return render(request, "network/index.html", {
-        "active_posts": Post.objects.all().order_by("-created_datetime"),
         "posts": paginator.get_page(page)
     })
 
