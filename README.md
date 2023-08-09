@@ -9,6 +9,8 @@ This repository contains the assignments that the author has done previously for
 - Project 1: Designed a Wikipedia-like online encyclopedia with Django Webframe
 - Project 2: Designed an eBay-like e-commerce auction site with auctioning, bidding, commenting and adding to "watchlist" capabilities, utilizing Django Webframe with SQL, Models and Migration
 - Project 3: Designed a front-end for an email client that makes API calls to send and receive emails, utilizing Django Webframe with JavaScript
+- Project 4: Design a Twitter-like social network website for making posts and following users
+- Project Final: Capstone
 
 ## Author ##
 Tey Ming Chuan
