@@ -1,0 +1,31 @@
+div.header {
+    display: flex;
+    justify-content: center;
+    margin: 30px 30px 30px 30px;
+}
+
+div.timetable_container{
+    margin: 30px 30px 30px 30px;
+}
+
+div.dayCol {
+    background-color: brown;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    border: solid black 1px;
+    width: 80px;
+}
+
+div.timeblock {
+    width: 80px;
+    height: 50px;
+    border: solid black 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+
