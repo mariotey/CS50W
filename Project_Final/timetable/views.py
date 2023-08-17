@@ -7,3 +7,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 def index(request):
     return render(request, "timetable/index.html")
+
+def createEvent(request):
+    return render(request, "timetable/event.html")

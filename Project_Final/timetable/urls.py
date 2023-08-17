@@ -7,5 +7,7 @@ app_name = "timetable"
 
 urlpatterns = [
     path("", views.index, name="index"),
+
+    path("createEvent/", views.createEvent, name="createEvent"),
 ]
 

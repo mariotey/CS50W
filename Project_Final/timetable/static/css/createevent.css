@@ -1,0 +1,60 @@
+#form_container {
+    margin: 20px 20px 20px 20px;
+}
+
+label {
+    width: 130px;
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+.form_row{
+    display: flex;
+    margin: 10px 0px 10px 0px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+textarea {
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: vertical;
+    box-sizing: border-box;
+    /* Include padding and border in width/height */
+}
+
+.dateLabel {
+    width: 100px;
+    margin: 0px 0px 5px 0px;
+    text-align: center;
+}
+
+.dateContainer{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+#button_container {
+    margin: 20px 20px 20px 20px;
+    display: flex;
+    justify-content: center;
+}
