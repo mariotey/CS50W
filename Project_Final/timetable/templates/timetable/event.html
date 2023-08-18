@@ -1,60 +1,45 @@
 {% extends "timetable/layout.html" %}
 
 {% block head%}
-    <link rel="stylesheet" href="/static/css/createevent.css" type="text/css">
+<link rel="stylesheet" href="/static/css/createevent.css" type="text/css">
+<link rel="stylesheet" href="/static/css/datepicker.css" type="text/css">
 {% endblock %}
 
 {% block body %}
-    <form method="POST">  
-        <div id="form_container">
-            <div class = "form_row">
-                <label> Name of Event: </label>
-                <div style="width: 100%;">
-                    <input id = "name" type="text"/>
-                </div>
-            </div>
-
-            <div class = "form_row">
-                <label> Description: </label>
-                <div style="width: 100%;">
-                    <textarea id="description"></textarea>
-                </div>
-            </div>
-
-            <div class = "form_row dateContainer">
-                <div style="display: flex;">
-                    <label class = "dateLabel">Start Date:</label>
-                    <div>
-                        <select id="start_date"></select>
-                    </div>
-                    <div>
-                        <select id="start_month"></select>
-                    </div>
-                    <div>
-                        <select id="start_year"></select>
-                    </div>
-                </div>
-                <div style="display: flex;">
-                    <label class = "dateLabel">End Date:</label>
-                    <div>
-                        <select id="end_date"></select>
-                    </div>
-                    <div>
-                        <select id="end_month"></select>
-                    </div>
-                    <div>
-                        <select id="end_year"></select>
-                    </div>
-                </div>
-            </div>
-            <div id="button_container" class = "form_row">
-                <button type="submit">Submit</button>
+<!-- <form method="POST">
+    {% csrf_token %} -->
+    <div id="form_container">
+        <div class="form_row">
+            <label> Name of Event: </label>
+            <div style="width: 100%;">
+                <input id="name" type="text" />
             </div>
         </div>
-    </form>
 
-    <script src="/static/js/createevent.js"></script>
-    <script>
-        renderDates();
-    </script>
+        <div class="form_row">
+            <label> Description: </label>
+            <div style="width: 100%;">
+                <textarea id="description"></textarea>
+            </div>
+        </div>
+
+        <div class="date-picker">
+            <div class="input">
+                <div class="result">Select Date: <span></span></div>
+                <button><i class="fa fa-calendar"></i></button>
+            </div>
+            <div class="calendar"></div>
+        </div>
+
+        <!-- <div id="button_container" class="form_row">
+            <button type="submit">Submit</button>
+        </div>
+    </div>
+</form> -->
+
+<script src="/static/js/createevent.js"></script>
+<script src="/static/js/datepicker.js"></script>
+<script>
+    renderDates();
+</script>
 {% endblock %}
