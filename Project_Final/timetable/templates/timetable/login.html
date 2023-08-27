@@ -1,14 +1,21 @@
-{% extends "timetable/layout.html" %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block body %}
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/smoothness/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+</head>
 
+<body>
     <h2>Login</h2>
-
     {% if message %}
-        <div>{{ message }}</div>
+    <div>{{ message }}</div>
     {% endif %}
 
-    <form action="{% url 'timetable:mainTable' %}" method="post">
+    <form action="{% url 'timetable:login' %}" method="post">
         {% csrf_token %}
         <div class="form-group">
             <input autofocus class="form-control" type="text" name="username" placeholder="Username">
@@ -20,5 +27,6 @@
     </form>
 
     Don't have an account? <a href="{% url 'timetable:register' %}">Register here.</a>
+</body>
 
-{% endblock %}
+</html>

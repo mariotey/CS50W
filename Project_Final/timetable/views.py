@@ -1,14 +1,19 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import AnonymousUser
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from.models import User
+import logging
 
+logger = logging.getLogger(__name__)
 
 def index(request):
-    return render(request, "timetable/index.html")
+    return render(request, "timetable/login.html")
+
+#################################################################################################
 
 def login_view(request):
     if request.method == "POST":
@@ -21,8 +26,13 @@ def login_view(request):
         # Check if authentication successful
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse("timetable:index"))
+            print("Login successful")
+
+            ## Add in logic to populate mainTable with specific user data
+            
+            return render(request, "timetable/mainTable.html")
         else:
+            print("Login unsuccessful")
             return render(request, "timetable/login.html", {
                 "message": "Invalid username and/or password."
             })
@@ -31,7 +41,15 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect(reverse("timetable:index"))
+
+    if isinstance(request.user, AnonymousUser):
+       print("Logout was successful")
+       logger.info(f"User {request.user} has been logged out.")
+    else:
+        print("Logout was unsuccessful")
+        logger.error("Logout failed. User is still authenticated.")
+
+    return HttpResponseRedirect(reverse("timetable:login"))
 
 def register(request):
     if request.method == "POST":
@@ -60,6 +78,9 @@ def register(request):
         return render(request, "timetable/register.html")
 
 #################################################################################################
+
+def mainTable(request):
+    return render(request, "timetable/mainTable.html")
 
 def createEvent(request):
     return render(request, "timetable/event.html")
