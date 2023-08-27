@@ -1,14 +1,13 @@
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import AnonymousUser
+from django.contrib.auth.decorators import login_required  # Import the login_required decorator
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
-from.models import User
-import logging
 
-logger = logging.getLogger(__name__)
+from .models import User, Event
+from datetime import datetime
 
 def index(request):
     return render(request, "timetable/login.html")
@@ -28,9 +27,7 @@ def login_view(request):
             login(request, user)
             print("Login successful")
 
-            ## Add in logic to populate mainTable with specific user data
-            
-            return render(request, "timetable/mainTable.html")
+            return mainTable(request)
         else:
             print("Login unsuccessful")
             return render(request, "timetable/login.html", {
@@ -41,14 +38,6 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-
-    if isinstance(request.user, AnonymousUser):
-       print("Logout was successful")
-       logger.info(f"User {request.user} has been logged out.")
-    else:
-        print("Logout was unsuccessful")
-        logger.error("Logout failed. User is still authenticated.")
-
     return HttpResponseRedirect(reverse("timetable:login"))
 
 def register(request):
@@ -80,7 +69,29 @@ def register(request):
 #################################################################################################
 
 def mainTable(request):
+    ## Add in logic to populate mainTable with specific user data
+
     return render(request, "timetable/mainTable.html")
 
+def newEvent(request):
+    return render(request, "timetable/newEvent.html")
+
+@login_required  # Add the login_required decorator to ensure the user is authenticated
 def createEvent(request):
-    return render(request, "timetable/event.html")
+    if request.method == "POST":
+        
+        if request.user.is_authenticated:
+            
+            event = Event(
+                user = request.user,
+                event_name = request.POST["event_name"],
+                event_description = request.POST["event_description"],
+                start_datetime = datetime.strptime(f"{request.POST['start_date']} {request.POST['start_time']}", "%Y-%m-%d %H:%M"),
+                end_datetime = datetime.strptime(f"{request.POST['end_date']} {request.POST['end_time']}", "%Y-%m-%d %H:%M")
+            )
+
+            event.save()
+        else:
+            print("User is not authenticated")
+    
+    return HttpResponseRedirect(reverse("timetable:mainTable"))

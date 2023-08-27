@@ -9,7 +9,8 @@ urlpatterns = [
     path("logout", views.logout_view, name="logout"),
     path("register", views.register, name="register"),
 
-    path("mainTable/", views.index, name="mainTable"),
+    path("mainTable/", views.mainTable, name="mainTable"),
+    path("newEvent/", views.newEvent, name="newEvent"),
     path("createEvent/", views.createEvent, name="createEvent"),
 ]
 
