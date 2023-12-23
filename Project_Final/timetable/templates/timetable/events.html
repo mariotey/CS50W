@@ -55,20 +55,56 @@
     <div class="tab-container">
         <!-- Tab buttons -->
         <div style = "display: flex; justify-content: space-evenly;">
-            <button class="tab-button" onclick="openTab(event, 'upcoming')">Upcoming</button>
+            <button class="tab-button active" onclick="openTab(event, 'upcoming')">Upcoming</button>
             <button class="tab-button" onclick="openTab(event, 'past')">Past</button>
         </div>
 
         <!-- Tab content -->
         <div>
             <div id="upcoming" class="tab-content active">
-                <h2>Upcoming Events</h2>
-                <p>These are the upcoming events.</p>
-            </div>
+                {% if upcoming %}
+                <table style="width: 100%">
+                    <tr>
+                        <th style="width: 20%">Name</th>
+                        <th style="width: 30%">Description</th>
+                        <th style="width: 20%"> Start Date</th>
+                        <th style="width: 20%"> End Date</th>
+                    </tr>
+                    {% for event in upcoming %}
+                        <tr>
+                            <td> {{ event.name }} </td>
+                            <td> {{ event.description }} </td>
+                            <td> {{ event.start_date }} </td>
+                            <td> {{ event.end_date }} </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                {% else %}
+                    <h2>No Upcoming Events found</h2>
+                {% endif %}
+             </div>
 
-            <div id="past" class="tab-content">
-                <h2>Past Events</h2>
-                <p>These are the past events.</p>
+             <div id="past" class="tab-content">
+                {% if past %}
+                    <table style="width: 100%">
+                        <tr>
+                            <th style="width: 20%">Name</th>
+                            <th style="width: 30%">Description</th>
+                            <th style="width: 20%"> Start Date</th>
+                            <th style="width: 20%"> End Date</th>
+                        </tr>
+                        {% for event in past %}
+                            <tr>
+                                <td> {{ event.name }} </td>
+                                <td> {{ event.description }} </td>
+                                <td> {{ event.start_date }} </td>
+                                <td> {{ event.end_date }} </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    <h2>No Past Events found</h2>
+                {% endif %}
             </div>
         </div>
     </div>

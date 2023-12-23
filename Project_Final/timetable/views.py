@@ -5,6 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
+from django.utils import timezone
 
 from .models import User, Event
 from . import holidays
@@ -42,13 +43,16 @@ def logout_view(request):
     return HttpResponseRedirect(reverse("timetable:login"))
 
 def register(request):
+    print(request)
+
     if request.method == "POST":
         username = request.POST["username"]
         email = request.POST["email"]
-
-        # Ensure password matches confirmation
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
+
+        print(username)
+
         if password != confirmation:
             return render(request, "timetable/register.html", {
                 "message": "Passwords must match."
@@ -57,13 +61,19 @@ def register(request):
         # Attempt to create new user
         try:
             user = User.objects.create_user(username, email, password)
-            user.save()
+
+            login(request, user)
+
+            return HttpResponseRedirect(reverse("timetable:mainTable"))
+
         except IntegrityError:
             return render(request, "timetable/register.html", {
-                "message": "Username already taken."
+                "message": "Username or email already taken."
             })
-        login(request, user)
-        return HttpResponseRedirect(reverse("timetable:index"))
+
+        except Exception as error:
+            print(error)
+
     else:
         return render(request, "timetable/register.html")
 
@@ -78,8 +88,47 @@ def mainTable(request):
 def newEvent(request):
     return render(request, "timetable/newEvent.html")
 
+@login_required  # Add the login_required decorator to ensure the user is authenticated
 def existEvent(request):
-    return render(request, "timetable/events.html")
+    if request.user.is_authenticated:
+        events = Event.objects.filter(user=request.user)
+
+        current_datetime = timezone.now()
+
+        upcoming_events, past_events = [], []
+
+        for event in events:
+            # Make event.start_datetime and event.end_datetime timezone-aware
+            end_datetime_aware = event.end_datetime if timezone.is_aware(event.end_datetime) else timezone.make_aware(event.end_datetime, timezone.get_current_timezone())
+
+            if current_datetime <= end_datetime_aware:
+                upcoming_events.append({
+                    "name": event.event_name,
+                    "description": event.event_description,
+                    "start_date": event.start_datetime,
+                    "end_date": event.end_datetime
+                })
+            else:
+                past_events.append({
+                    "name": event.event_name,
+                    "description": event.event_description,
+                    "start_date": event.start_datetime,
+                    "end_date": event.end_datetime
+                })
+
+        print(upcoming_events,"\n")
+        print(past_events, "\n")
+
+        return render(request, "timetable/events.html", {
+            "upcoming": upcoming_events,
+            "past": past_events
+        })
+
+    else:
+        print("User is not authenticated")
+
+        return HttpResponseRedirect(reverse("timetable:mainTable"))
+
 
 @login_required  # Add the login_required decorator to ensure the user is authenticated
 def createEvent(request):

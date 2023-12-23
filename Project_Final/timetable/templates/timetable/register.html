@@ -14,7 +14,7 @@
     {% if message %}
     <div>{{ message }}</div>
     {% endif %}
-    <form action="{% url 'timetable:mainTable' %}" method="post">
+    <form action="{% url 'timetable:register' %}" method="post">
         {% csrf_token %}
         <div class="form-group">
             <input class="form-control" autofocus type="text" name="username" placeholder="Username">
