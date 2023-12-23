@@ -2,11 +2,12 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required  # Import the login_required decorator
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import User, Event
+from . import holidays
 from datetime import datetime
 
 def index(request):
@@ -27,7 +28,7 @@ def login_view(request):
             login(request, user)
             print("Login successful")
 
-            return mainTable(request)
+            return redirect(reverse("timetable:mainTable"))
         else:
             print("Login unsuccessful")
             return render(request, "timetable/login.html", {
@@ -69,19 +70,23 @@ def register(request):
 #################################################################################################
 
 def mainTable(request):
-    ## Add in logic to populate mainTable with specific user data
+    # Update Holiday in database
+    holidays.add_update_holidays()
 
     return render(request, "timetable/mainTable.html")
 
 def newEvent(request):
     return render(request, "timetable/newEvent.html")
 
+def existEvent(request):
+    return render(request, "timetable/events.html")
+
 @login_required  # Add the login_required decorator to ensure the user is authenticated
 def createEvent(request):
     if request.method == "POST":
-        
+
         if request.user.is_authenticated:
-            
+
             event = Event(
                 user = request.user,
                 event_name = request.POST["event_name"],
@@ -93,5 +98,5 @@ def createEvent(request):
             event.save()
         else:
             print("User is not authenticated")
-    
+
     return HttpResponseRedirect(reverse("timetable:mainTable"))

@@ -14,3 +14,11 @@ class Event(models.Model):
 
     def __str__(self):
         return f"{self.user}, {self.event_name}"
+
+class Holiday(models.Model):
+    holiday_name = models.CharField(max_length=600)
+    holiday_description = models.CharField(max_length=6000)
+    date = models.DateTimeField()
+
+    def __str__(self):
+        return f"{self.holiday_name}, {self.date}"

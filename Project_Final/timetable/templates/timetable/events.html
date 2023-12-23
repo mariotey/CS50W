@@ -1,0 +1,97 @@
+{% extends "timetable/layout.html" %}
+
+{% block head%}
+    <link rel="stylesheet" href="/static/css/timetable.css" type="text/css">
+    <style>
+        /* Style the tab container */
+        .tab-container {
+            background-color: #f1f1f1;
+        }
+
+        /* Style the tab buttons */
+        .tab-button {
+            padding: 15px 20px;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            background-color: inherit;
+            font-size: 16px;
+            color: #555;
+            transition: background-color 0.3s;
+        }
+
+        /* Change background color on hover */
+        .tab-button:hover {
+            background-color: #ddd;
+        }
+
+        /* Style the active tab button */
+        .tab-button.active {
+            background-color: #ccc;
+        }
+
+        /* Style the tab content */
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background-color: #fff;
+            flex: 1;
+        }
+
+        /* Show the active tab content */
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+
+{% endblock %}
+
+{% block body %}
+    <div style = "display: flex; justify-content: center; margin: 1%;">
+        <a href="{% url 'timetable:newEvent' %}"> + Add Event</a>
+    </div>
+
+    <!-- Tab container -->
+    <div class="tab-container">
+        <!-- Tab buttons -->
+        <div style = "display: flex; justify-content: space-evenly;">
+            <button class="tab-button" onclick="openTab(event, 'upcoming')">Upcoming</button>
+            <button class="tab-button" onclick="openTab(event, 'past')">Past</button>
+        </div>
+
+        <!-- Tab content -->
+        <div>
+            <div id="upcoming" class="tab-content active">
+                <h2>Upcoming Events</h2>
+                <p>These are the upcoming events.</p>
+            </div>
+
+            <div id="past" class="tab-content">
+                <h2>Past Events</h2>
+                <p>These are the past events.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openTab(evt, tabId) {
+            // Hide all tab contents
+            var tabContents = document.getElementsByClassName('tab-content');
+            for (var i = 0; i < tabContents.length; i++) {
+                tabContents[i].style.display = 'none';
+            }
+
+            // Remove 'active' class from all tab buttons
+            var tabButtons = document.getElementsByClassName('tab-button');
+            for (var i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove('active');
+            }
+
+            // Show the selected tab content
+            document.getElementById(tabId).style.display = 'block';
+
+            // Add 'active' class to the clicked tab button
+            evt.currentTarget.classList.add('active');
+        }
+    </script>
+{% endblock %}

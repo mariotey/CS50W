@@ -18,10 +18,10 @@
             <div class="sidegreet"> Welcome, {{ request.user }}!</div>
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <a href="{% url 'timetable:mainTable' %}">View Timetable</a>
-            <a href="{% url 'timetable:newEvent' %}">Add Event</a>
+            <a href="{% url 'timetable:existEvent' %}">Events</a>
             <a class="nav-link logout" href="{% url 'timetable:logout' %}">Log Out</a>
         </div>
-    
+
         <span style="font-size:30px;cursor:pointer; margin: 10px 10px;" onclick="openNav()">&#9776;</span>
 
         {% block body %}
@@ -30,7 +30,7 @@
             function openNav() {
                 document.getElementById("mySidenav").style.width = "250px";
             }
-    
+
             function closeNav() {
                 document.getElementById("mySidenav").style.width = "0";
             }

@@ -11,6 +11,6 @@ urlpatterns = [
 
     path("mainTable/", views.mainTable, name="mainTable"),
     path("newEvent/", views.newEvent, name="newEvent"),
+    path("existEvent/", views.existEvent, name="existEvent"),
     path("createEvent/", views.createEvent, name="createEvent"),
 ]
-
