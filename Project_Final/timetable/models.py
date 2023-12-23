@@ -17,8 +17,8 @@ class Event(models.Model):
 
 class Holiday(models.Model):
     holiday_name = models.CharField(max_length=600)
-    holiday_description = models.CharField(max_length=6000)
-    date = models.DateTimeField()
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField()
 
     def __str__(self):
-        return f"{self.holiday_name}, {self.date}"
+        return f"{self.holiday_name}, {self.start_date}, {self.end_date}"
