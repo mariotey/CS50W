@@ -9,7 +9,7 @@
 ## How to Clone Repository ##
 1. git init @ repository
 2. navigate to Profile -> Settings -> Developer settings -> Generate New Token
-3. git clone https://<personal_access_token>@github.com/<github_account_username>/<github_repository>.git 
+3. git clone https://<personal_access_token>@github.com/<github_account_username>/<github_repository>.git
 
 ## Create & Run Django Project ##
 1. python -m django startproject "ProjectName"
@@ -34,7 +34,7 @@
 ## Create and implement migrations
 1. navigate to Django Project repository
 2. python manage.py makemigrations
-3. python manage.pt migrate
+3. python manage.py migrate
 
 ## How to manipulate SQL database in Linux terminal
 1. navigate to Django Project repository
@@ -49,4 +49,4 @@
 3. Username (leave blank to use 'workspace'): mariotey
 4. Password:
 5. Password (again):
-6. Superuser created successfully 
+6. Superuser created successfully
