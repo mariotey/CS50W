@@ -6,6 +6,18 @@
 
 {% block body %}
     <div id = "header" class="header"></div>
+
+    {% if holiday %}
+        <div style="display: flex; justify-content: center; color: red;">
+            It's
+            {% for event in holiday %}
+                {{ event.event_name }}
+                {% if not forloop.last %},{% endif %}
+            {% endfor %}
+            !
+        </div>
+    {% endif %}
+
     <div id = "timetable_container" class="timetable_container">
         <div id="time_container" style="display: flex; justify-content: center; text-align: center;">
             <div class="timeblock"></div>

@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 
-from .models import User, Event
+from .models import User, Event, Holiday
 from . import holidays
 from datetime import datetime
 
@@ -83,7 +83,14 @@ def mainTable(request):
     # Update Holiday in database
     holidays.add_update_holidays()
 
-    return render(request, "timetable/mainTable.html")
+    # filters for holidays where the start_date is less than or equal to the current time and the
+    # end_date is greater than or equal to the current time, which effectively checks if the current
+    # date falls within the range of the holiday
+    holiday =  Holiday.objects.filter(start_date__lte=timezone.now(), end_date__gte=timezone.now())
+
+    print(holiday)
+
+    return render(request, "timetable/mainTable.html", {"holiday": holiday})
 
 def newEvent(request):
     return render(request, "timetable/newEvent.html")
