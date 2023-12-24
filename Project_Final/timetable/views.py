@@ -90,45 +90,35 @@ def newEvent(request):
 
 @login_required  # Add the login_required decorator to ensure the user is authenticated
 def existEvent(request):
-    if request.user.is_authenticated:
-        events = Event.objects.filter(user=request.user)
 
-        current_datetime = timezone.now()
+    upcoming_events, past_events = [], []
 
-        upcoming_events, past_events = [], []
+    for event in Event.objects.filter(user=request.user):
+        # Make event.end_datetime timezone-aware
+        end_datetime_aware = event.end_datetime if timezone.is_aware(event.end_datetime) else timezone.make_aware(event.end_datetime, timezone.get_current_timezone())
 
-        for event in events:
-            # Make event.start_datetime and event.end_datetime timezone-aware
-            end_datetime_aware = event.end_datetime if timezone.is_aware(event.end_datetime) else timezone.make_aware(event.end_datetime, timezone.get_current_timezone())
+        if timezone.now() <= end_datetime_aware:
+            upcoming_events.append({
+                "name": event.event_name,
+                "description": event.event_description,
+                "start_date": event.start_datetime,
+                "end_date": event.end_datetime
+            })
+        else:
+            past_events.append({
+                "name": event.event_name,
+                "description": event.event_description,
+                "start_date": event.start_datetime,
+                "end_date": event.end_datetime
+            })
 
-            if current_datetime <= end_datetime_aware:
-                upcoming_events.append({
-                    "name": event.event_name,
-                    "description": event.event_description,
-                    "start_date": event.start_datetime,
-                    "end_date": event.end_datetime
-                })
-            else:
-                past_events.append({
-                    "name": event.event_name,
-                    "description": event.event_description,
-                    "start_date": event.start_datetime,
-                    "end_date": event.end_datetime
-                })
+    print(upcoming_events,"\n")
+    print(past_events, "\n")
 
-        print(upcoming_events,"\n")
-        print(past_events, "\n")
-
-        return render(request, "timetable/events.html", {
-            "upcoming": upcoming_events,
-            "past": past_events
-        })
-
-    else:
-        print("User is not authenticated")
-
-        return HttpResponseRedirect(reverse("timetable:mainTable"))
-
+    return render(request, "timetable/events.html", {
+        "upcoming": upcoming_events,
+        "past": past_events
+    })
 
 @login_required  # Add the login_required decorator to ensure the user is authenticated
 def createEvent(request):

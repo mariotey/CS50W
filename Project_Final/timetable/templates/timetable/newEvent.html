@@ -51,9 +51,7 @@
 
         <div id="button_container" class="form_row">
             <div>
-                <button>
-                    <a href="{% url 'timetable:existEvent' %}" style="color: inherit; text-decoration: inherit;">Cancel</a>
-                </button>
+                <button type = "button" onclick="redirectToExistEvent()">Cancel</button>
             </div>
             <div>
                 <button type="submit">Submit</button>
@@ -64,6 +62,10 @@
 
 <script src="/static/js/createevent.js"></script>
 <script>
+    function redirectToExistEvent() {
+        window.location.href = '{% url "timetable:existEvent" %}';
+    }
+
     renderDates();
 </script>
 {% endblock %}
