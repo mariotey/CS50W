@@ -6,9 +6,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
+from django.db.models import Q
 
 from .models import User, Event, Holiday
-from . import holidays
+from . import holidays as h
 from datetime import datetime
 
 def index(request):
@@ -81,16 +82,32 @@ def register(request):
 
 def mainTable(request):
     # Update Holiday in database
-    holidays.add_update_holidays()
+    h.add_update_holidays()
 
     # filters for holidays where the start_date is less than or equal to the current time and the
     # end_date is greater than or equal to the current time, which effectively checks if the current
     # date falls within the range of the holiday
-    holiday =  Holiday.objects.filter(start_date__lte=timezone.now(), end_date__gte=timezone.now())
+    current_datetime = timezone.now().date()
 
-    print(holiday)
+    holidays = Holiday.objects.filter(
+        start_date__date__in=[current_datetime],
+        end_date__date__in=[current_datetime]
+    )
 
-    return render(request, "timetable/mainTable.html", {"holiday": holiday})
+    events = Event.objects.filter(
+        user=request.user,
+        start_date__date__in=[current_datetime],
+        end_date__date__in=[current_datetime]
+    )
+
+    print(events)
+
+    return render(request, "timetable/mainTable.html",
+                    {
+                        "holidays": holidays,
+                        "events": events
+                    }
+                )
 
 def newEvent(request):
     return render(request, "timetable/newEvent.html")
@@ -102,21 +119,21 @@ def existEvent(request):
 
     for event in Event.objects.filter(user=request.user):
         # Make event.end_datetime timezone-aware
-        end_datetime_aware = event.end_datetime if timezone.is_aware(event.end_datetime) else timezone.make_aware(event.end_datetime, timezone.get_current_timezone())
+        end_date_aware = event.end_date if timezone.is_aware(event.end_date) else timezone.make_aware(event.end_date, timezone.get_current_timezone())
 
-        if timezone.now() <= end_datetime_aware:
+        if timezone.now() <= end_date_aware:
             upcoming_events.append({
-                "name": event.event_name,
+                "name": event.name,
                 "description": event.event_description,
-                "start_date": event.start_datetime,
-                "end_date": event.end_datetime
+                "start_date": event.start_date,
+                "end_date": event.end_date
             })
         else:
             past_events.append({
-                "name": event.event_name,
+                "name": event.name,
                 "description": event.event_description,
-                "start_date": event.start_datetime,
-                "end_date": event.end_datetime
+                "start_date": event.start_date,
+                "end_date": event.end_date
             })
 
     print(upcoming_events,"\n")
@@ -135,10 +152,10 @@ def createEvent(request):
 
             event = Event(
                 user = request.user,
-                event_name = request.POST["event_name"],
+                name = request.POST["event_name"],
                 event_description = request.POST["event_description"],
-                start_datetime = datetime.strptime(f"{request.POST['start_date']} {request.POST['start_time']}", "%Y-%m-%d %H:%M"),
-                end_datetime = datetime.strptime(f"{request.POST['end_date']} {request.POST['end_time']}", "%Y-%m-%d %H:%M")
+                start_date = datetime.strptime(f"{request.POST['start_date']} {request.POST['start_time']}", "%Y-%m-%d %H:%M"),
+                end_date = datetime.strptime(f"{request.POST['end_date']} {request.POST['end_time']}", "%Y-%m-%d %H:%M")
             )
 
             event.save()

@@ -7,10 +7,10 @@
 {% block body %}
     <div id = "header" class="header"></div>
 
-    {% if holiday %}
+    {% if holidays %}
         <div style="display: flex; justify-content: center; color: red;">
             It's
-            {% for event in holiday %}
+            {% for event in holidays %}
                 {{ event.event_name }}
                 {% if not forloop.last %},{% endif %}
             {% endfor %}

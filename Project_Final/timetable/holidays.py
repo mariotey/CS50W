@@ -30,7 +30,7 @@ def add_update_holidays():
                 print("-" * 20)
 
                 holiday = Holiday(
-                    holiday_name = name,
+                    name = name,
                     start_date = datetime.strptime(start_date, '%d %B %Y'),
                     end_date = datetime.strptime(end_date, '%d %B %Y'),
                 )
@@ -44,14 +44,15 @@ def add_update_holidays():
                 print("-" * 20)
 
                 holiday = Holiday(
-                    holiday_name = name,
+                    name = name,
                     start_date = datetime.strptime(date, '%d %B %Y'),
                     end_date = datetime.strptime(date, '%d %B %Y'),
                 )
 
             holiday.save()
 
-        print("Holidays updated")
+        # print("Holidays updated")
 
     else:
-        print("No holidays updated")
+        # print("No holidays updated")
+        pass
