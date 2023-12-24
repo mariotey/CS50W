@@ -2,7 +2,7 @@
 
 {% block head%}
 <link rel="stylesheet" href="/static/css/createevent.css" type="text/css">
-<link rel="stylesheet" href="/static/css/datepicker.css" type="text/css">
+<!-- <link rel="stylesheet" href="/static/css/datepicker.css" type="text/css"> -->
 {% endblock %}
 
 {% block body %}
@@ -50,7 +50,11 @@
         </div>
 
         <div id="button_container" class="form_row">
-            <label></label>
+            <div>
+                <button>
+                    <a href="{% url 'timetable:existEvent' %}" style="color: inherit; text-decoration: inherit;">Cancel</a>
+                </button>
+            </div>
             <div>
                 <button type="submit">Submit</button>
             </div>

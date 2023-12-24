@@ -44,17 +44,20 @@ textarea {
     justify-content: space-evenly;
 }
 
-button[type="submit"] {
-    background-color: #007bff;
-    color: white;
+button {
     border: none;
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 10px;
 }
 
+button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+}
+
 #button_container {
     margin: 20px 20px 20px 20px;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
 }
