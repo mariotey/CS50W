@@ -17,8 +17,9 @@
         <div id="mySidenav" class="sidenav">
             <div class="sidegreet"> Welcome, {{ request.user }}!</div>
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a href="{% url 'timetable:mainTable' %}">View Timetable</a>
+            <a href="{% url 'timetable:mainTable' %}">Timetable</a>
             <a href="{% url 'timetable:existEvent' %}">Events</a>
+            <a href="{% url 'timetable:userFeed' %}"> Feeds </a>
             <a class="nav-link logout" href="{% url 'timetable:logout' %}">Log Out</a>
         </div>
 

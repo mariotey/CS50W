@@ -102,8 +102,7 @@ def mainTable(request):
 
     print(events)
 
-    return render(request, "timetable/mainTable.html",
-                    {
+    return render(request, "timetable/mainTable.html", {
                         "holidays": holidays,
                         "events": events
                     }
@@ -163,3 +162,10 @@ def createEvent(request):
             print("User is not authenticated")
 
     return HttpResponseRedirect(reverse("timetable:mainTable"))
+
+def feed(request):
+    events = Event.objects.all().order_by('created_date')
+
+    return render(request, "timetable/feed.html", {
+        "events": events
+    })
