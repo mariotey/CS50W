@@ -11,13 +11,13 @@ function render_table() {
     const dateHeader = document.createElement("h1");
     dateHeader.innerHTML = `${day} ${month_list[month]} ${year}`;
     document.querySelector("#header").append(dateHeader);
-    
+
     for(let time = 0; time < time_list.length; time++){
         const timeDiv = document.createElement("div");
         timeDiv.innerHTML = time_list[time];
         timeDiv.className = "timeblock";
         document.querySelector("#time_container").append(timeDiv);
-    } 
+    }
 
     for(let day = 0; day < days_list.length; day++){
         const timeDivContainer = document.createElement("div");
@@ -27,7 +27,7 @@ function render_table() {
 
         for(let time_div = 0; time_div < document.querySelector("#time_container").querySelectorAll("div").length; time_div++){
             const timeDiv = document.createElement("div");
-            
+
             if (time_div == 0){
                 timeDiv.className = "dayCol timeblock";
                 timeDiv.innerHTML = days_list[day];

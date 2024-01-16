@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.core.serializers import serialize
 from django.contrib.auth.decorators import login_required  # Import the login_required decorator
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -10,7 +11,8 @@ from django.db.models import Q
 
 from .models import User, Event, Holiday
 from . import holidays as h
-from datetime import datetime
+from datetime import datetime, timedelta
+import json
 
 def index(request):
     return render(request, "timetable/login.html")
@@ -87,24 +89,39 @@ def mainTable(request):
     # filters for holidays where the start_date is less than or equal to the current time and the
     # end_date is greater than or equal to the current time, which effectively checks if the current
     # date falls within the range of the holiday
-    current_datetime = timezone.now().date()
+    current_datetime = timezone.localtime(timezone.now())
+    current_weekday = current_datetime.weekday()
+
+    start_of_week = current_datetime - timedelta(days=current_datetime.weekday())
+    end_of_week = start_of_week + timedelta(days=6)
 
     holidays = Holiday.objects.filter(
         start_date__date__in=[current_datetime],
         end_date__date__in=[current_datetime]
     )
 
+    print(current_datetime, current_weekday)
+    print(start_of_week)
+    print(end_of_week)
+
     events = Event.objects.filter(
         user=request.user,
-        start_date__date__in=[current_datetime],
-        end_date__date__in=[current_datetime]
+        start_date__range=[start_of_week, end_of_week],
+        end_date__range=[start_of_week, end_of_week]
     )
 
-    print(events)
+    # modified_events = {idx:[] for idx in range(7)}
+
+    # for event in events:
+    #     event_start_weekday = event.start_date.weekday()
+    #     event_end_weekday = event.end_date.weekday()
+
+    #     for day in range(event_start_weekday, event_end_weekday + 1):
+    #         modified_events[day].append(serialize('json', [event]))
 
     return render(request, "timetable/mainTable.html", {
                         "holidays": holidays,
-                        "events": events
+                        "modified_events_json": events,
                     }
                 )
 
@@ -117,22 +134,23 @@ def existEvent(request):
     upcoming_events, past_events = [], []
 
     for event in Event.objects.filter(user=request.user):
+
         # Make event.end_datetime timezone-aware
-        end_date_aware = event.end_date if timezone.is_aware(event.end_date) else timezone.make_aware(event.end_date, timezone.get_current_timezone())
+        end_date_aware = event.end_datetime if timezone.is_aware(event.end_datetime) else timezone.make_aware(event.end_datetime, timezone.get_current_timezone())
 
         if timezone.now() <= end_date_aware:
             upcoming_events.append({
                 "name": event.name,
                 "description": event.event_description,
-                "start_date": event.start_date,
-                "end_date": event.end_date
+                "start_date": event.start_datetime,
+                "end_date": event.end_datetime
             })
         else:
             past_events.append({
                 "name": event.name,
                 "description": event.event_description,
-                "start_date": event.start_date,
-                "end_date": event.end_date
+                "start_date": event.start_datetime,
+                "end_date": event.end_datetime
             })
 
     print(upcoming_events,"\n")
@@ -153,8 +171,12 @@ def createEvent(request):
                 user = request.user,
                 name = request.POST["event_name"],
                 event_description = request.POST["event_description"],
-                start_date = datetime.strptime(f"{request.POST['start_date']} {request.POST['start_time']}", "%Y-%m-%d %H:%M"),
-                end_date = datetime.strptime(f"{request.POST['end_date']} {request.POST['end_time']}", "%Y-%m-%d %H:%M")
+                start_datetime = datetime.strptime(f"{request.POST['start_date']} {request.POST['start_time']}", "%Y-%m-%d %H:%M"),
+                start_date=datetime.strptime(request.POST['start_date'], "%Y-%m-%d").date(),
+                start_time=datetime.strptime(request.POST['start_time'], "%H:%M").time(),
+                end_datetime = datetime.strptime(f"{request.POST['end_date']} {request.POST['end_time']}", "%Y-%m-%d %H:%M"),
+                end_date=datetime.strptime(request.POST['end_date'], "%Y-%m-%d").date(),
+                end_time=datetime.strptime(request.POST['end_time'], "%H:%M").time(),
             )
 
             event.save()
@@ -164,7 +186,7 @@ def createEvent(request):
     return HttpResponseRedirect(reverse("timetable:mainTable"))
 
 def feed(request):
-    events = Event.objects.all().order_by('created_date')
+    events = Event.objects.all().order_by('created_datetime')
 
     return render(request, "timetable/feed.html", {
         "events": events
