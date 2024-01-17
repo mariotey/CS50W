@@ -108,20 +108,15 @@ def mainTable(request):
         user=request.user,
         start_date__range=[start_of_week, end_of_week],
         end_date__range=[start_of_week, end_of_week]
-    )
+    ).order_by("start_datetime", "end_datetime")
 
-    # modified_events = {idx:[] for idx in range(7)}
-
-    # for event in events:
-    #     event_start_weekday = event.start_date.weekday()
-    #     event_end_weekday = event.end_date.weekday()
-
-    #     for day in range(event_start_weekday, event_end_weekday + 1):
-    #         modified_events[day].append(serialize('json', [event]))
+    print(events)
 
     return render(request, "timetable/mainTable.html", {
                         "holidays": holidays,
-                        "modified_events_json": events,
+                        "start_of_week": start_of_week,
+                        "end_of_week": end_of_week,
+                        "modified_events": serialize('json', events),
                     }
                 )
 
@@ -133,7 +128,7 @@ def existEvent(request):
 
     upcoming_events, past_events = [], []
 
-    for event in Event.objects.filter(user=request.user):
+    for event in Event.objects.filter(user=request.user).order_by("start_datetime", "end_datetime"):
 
         # Make event.end_datetime timezone-aware
         end_date_aware = event.end_datetime if timezone.is_aware(event.end_datetime) else timezone.make_aware(event.end_datetime, timezone.get_current_timezone())
@@ -186,7 +181,7 @@ def createEvent(request):
     return HttpResponseRedirect(reverse("timetable:mainTable"))
 
 def feed(request):
-    events = Event.objects.all().order_by('created_datetime')
+    events = Event.objects.all().order_by('-created_datetime')
 
     return render(request, "timetable/feed.html", {
         "events": events

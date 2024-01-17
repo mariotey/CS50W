@@ -26,9 +26,12 @@
 
     <script src="/static/js/timetable.js"></script>
     <script>
-        // events = {{ modified_events_json|safe }};
-        // console.log(events);
+        var events = JSON.parse('{{ modified_events|safe }}');
+        var start_of_week = new Date('{{ start_of_week|safe }}');
+        var end_of_week = new Date('{{ end_of_week|safe }}');
 
-        render_table();
+        console.log(events);
+
+        render_table(start_of_week, end_of_week, events);
     </script>
 {% endblock %}
