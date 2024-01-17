@@ -19,13 +19,18 @@ div.dayCol {
 
 div.timeblock {
     width: 80px;
-    height: 50px;
     border: solid black 1px;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     justify-content: center;
+    padding: 5px 5px;
 }
 
-
-
-
+div.timeblock > div {
+    box-sizing: border-box;
+    border: solid red 1px;
+    border-radius: 5px;
+    flex-grow: 1;
+    margin-bottom: 5px;
+}
