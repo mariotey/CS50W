@@ -24,6 +24,14 @@
         </div>
     </div>
 
+     <!-- Snippet Tool -->
+     <div style="display: flex; justify-content: center;">
+        <div id="event_container" style="border: solid 1px black; margin: 20px; padding: 20px; width: 75%; border-radius: 5px;">
+            Hello
+        </div>
+    </div>
+    
+
     <script src="/static/js/timetable.js"></script>
     <script>
         var events = JSON.parse('{{ modified_events|safe }}');
@@ -31,6 +39,10 @@
         var end_of_week = new Date('{{ end_of_week|safe }}');
 
         console.log(events);
+
+        console.log(start_of_week);
+        console.log(end_of_week)
+
 
         render_table(start_of_week, end_of_week, events);
     </script>

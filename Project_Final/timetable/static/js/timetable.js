@@ -1,4 +1,4 @@
-const days_list = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const days_list = [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" ];
 const time_list = ["06:00 to 07:00", "07:00 to 08:00", "08:00 to 09:00", "09:00 to 10:00", "10:00 to 11:00", "11:00 to 12:00", "12:00 to 13:00", "13:00 to 14:00", "14:00 to 15:00", "15:00 to 16:00", "16:00 to 17:00", "17:00 to 18:00", "18:00 to 19:00", "19:00 to 20:00", "20:00 to 21:00", "21:00 to 22:00", "22:00 to 23:00", "23:00 to 00:00"];
 const month_list = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
@@ -30,7 +30,6 @@ function render_table(start_date, end_date, events) {
             else{
                 timeDiv.className = "timeblock";
                 timeDiv.id = `timeslot_${day}_${time_div - 1}`;
-
             }
 
             timeDivContainer.append(timeDiv);
@@ -40,6 +39,10 @@ function render_table(start_date, end_date, events) {
     }
 
     for(let idx = 0; idx < events.length; idx++){
+        
+        console.log(events[idx].fields.start_datetime);
+        console.log(events[idx].fields.end_datetime);
+
         var event_start_day = new Date(events[idx].fields.start_datetime).getDay();
         var event_start_time = events[idx].fields.start_time.split(":").slice(0, 2).join(":");
 
@@ -53,19 +56,23 @@ function render_table(start_date, end_date, events) {
 
         console.log(`${start_idx} to ${end_idx}`);
 
-        for (let dayslot = event_start_day; dayslot <= event_end_day; dayslot++){
-            for (let timeslot = start_idx; timeslot < end_idx; timeslot++) {
-                var timeSlotElm = document.querySelector(`#timeslot_${(dayslot-1).toString()}_${timeslot.toString()}`);
+        // for (let dayslot = event_start_day; dayslot <= event_end_day; dayslot++){
+        //     for (let timeslot = start_idx; timeslot < end_idx; timeslot++) {
 
-                console.log(timeSlotElm);
+        //         console.log(dayslot);
+        //         console.log(timeslot);
 
-                var timeDiv = document.createElement("div");
-                timeDiv.innerHTML = events[idx].fields.name;
-                timeDiv.style.backgroundColor = "green";
+        //         var timeSlotElm = document.querySelector(`#timeslot_${(dayslot).toString()}_${timeslot.toString()}`);
 
-                timeSlotElm.append(timeDiv);
-            }
-        }
+        //         console.log(timeSlotElm);
+
+        //         var timeDiv = document.createElement("div");
+        //         timeDiv.innerHTML = events[idx].fields.name;
+        //         timeDiv.style.backgroundColor = "green";
+
+        //         timeSlotElm.append(timeDiv);
+        //     }
+        // }
 
     }
 }

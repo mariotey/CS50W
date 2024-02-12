@@ -91,8 +91,10 @@ def mainTable(request):
     # date falls within the range of the holiday
     current_datetime = timezone.localtime(timezone.now())
     current_weekday = current_datetime.weekday()
+    
+    print(timedelta(days=current_datetime.weekday()))
 
-    start_of_week = current_datetime - timedelta(days=current_datetime.weekday())
+    start_of_week = current_datetime - timedelta(days=current_datetime.weekday() + 1)
     end_of_week = start_of_week + timedelta(days=6)
 
     holidays = Holiday.objects.filter(
@@ -135,6 +137,7 @@ def existEvent(request):
 
         if timezone.now() <= end_date_aware:
             upcoming_events.append({
+                "id": event.id,  
                 "name": event.name,
                 "description": event.event_description,
                 "start_date": event.start_datetime,
@@ -142,14 +145,15 @@ def existEvent(request):
             })
         else:
             past_events.append({
+                "id": event.id, 
                 "name": event.name,
                 "description": event.event_description,
                 "start_date": event.start_datetime,
                 "end_date": event.end_datetime
             })
 
-    print(upcoming_events,"\n")
-    print(past_events, "\n")
+    # print(upcoming_events,"\n")
+    # print(past_events, "\n")
 
     return render(request, "timetable/events.html", {
         "upcoming": upcoming_events,
@@ -180,9 +184,21 @@ def createEvent(request):
 
     return HttpResponseRedirect(reverse("timetable:mainTable"))
 
+def deleteEvent(request, event_id):
+
+    delete_event = Event.objects.get(pk=event_id)
+
+    print(delete_event)
+
+    # Delete the event object
+    delete_event.delete()
+
+    return HttpResponseRedirect(reverse("timetable:existEvent"))
+
 def feed(request):
     events = Event.objects.all().order_by('-created_datetime')
 
     return render(request, "timetable/feed.html", {
         "events": events
     })
+

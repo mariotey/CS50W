@@ -69,6 +69,7 @@
                         <th style="width: 30%">Description</th>
                         <th style="width: 20%"> Start Date</th>
                         <th style="width: 20%"> End Date</th>
+                        <th></th>
                     </tr>
                     {% for event in upcoming %}
                         <tr>
@@ -76,6 +77,11 @@
                             <td> {{ event.description }} </td>
                             <td> {{ event.start_date }} </td>
                             <td> {{ event.end_date }} </td>
+                            <td>
+                                <a href="{% url 'timetable:deleteEvent' event_id=event.id %}">
+                                    Delete
+                                </a>
+                            </td>
                         </tr>
                     {% endfor %}
                 </table>
@@ -92,6 +98,7 @@
                             <th style="width: 30%">Description</th>
                             <th style="width: 20%"> Start Date</th>
                             <th style="width: 20%"> End Date</th>
+                            <th></th>
                         </tr>
                         {% for event in past %}
                             <tr>
@@ -99,6 +106,11 @@
                                 <td> {{ event.description }} </td>
                                 <td> {{ event.start_date }} </td>
                                 <td> {{ event.end_date }} </td>
+                                <td>
+                                    <a href="{% url 'timetable:deleteEvent' event_id=event.id %}">
+                                        Delete
+                                    </a>
+                                </td>
                             </tr>
                         {% endfor %}
                     </table>
@@ -108,7 +120,7 @@
             </div>
         </div>
     </div>
-
+    
     <script>
         function openTab(evt, tabId) {
             // Hide all tab contents
