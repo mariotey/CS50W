@@ -1,0 +1,61 @@
+{% extends "timetable/layout.html" %}
+
+{% block head%}
+    <link rel="stylesheet" href="/static/css/createevent.css" type="text/css">
+{% endblock %}
+
+{% block body %}
+    <form action="{% url 'timetable:editEvent' event_id=event.id%}" method="POST">
+        {% csrf_token %}
+        <div id="form_container">
+            <div class="form_row">
+                <label> Name of Event: </label>
+                <div style="width: 100%;">
+                    <input id="name" name = "event_name" type="text" value = "{{ event.name }}"/>
+                </div>
+            </div>
+
+            <div class="form_row" style = "margin: 5%;">
+                <label></label>
+                <div style="display: flex; justify-content: space-evenly; width: 100%;">
+                    <div>
+                        <div>
+                            <label>Start Date:</label>
+                            <input id="start_date" name = "start_date" type="date" value = "{{ event.start_date|date:'Y-m-d' }}">
+                        </div>
+                        <div>
+                            <label>Start Time</label>
+                            <input id="start_time" name = "start_time" type="time" value = "{{ event.start_time|time:'H:i' }}">
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <label>End Date</label>
+                            <input id="end_date" name="end_date" type="date" value="{{ event.end_date|date:'Y-m-d' }}">
+                        </div>
+                        <div>
+                            <label>End Time</label>
+                            <input id="end_time" name="end_time" type="time" value="{{ event.end_time|time:'H:i' }}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form_row">
+                <label> Description: </label>
+                <div style="width: 100%;">
+                    <textarea id="description" name = "event_description">{{ event.event_description }}</textarea>
+                </div>
+            </div>
+
+            <div id="button_container" class="form_row">
+                <div>
+                    <a href = "{% url 'timetable:existEvent' %}">Cancel</a>
+                </div>
+                <div>
+                    <button type="submit">Update</button>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}

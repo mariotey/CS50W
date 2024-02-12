@@ -184,6 +184,41 @@ def createEvent(request):
 
     return HttpResponseRedirect(reverse("timetable:mainTable"))
 
+def editEvent(request, event_id):
+    if request.method == "POST":
+        event = Event.objects.get(pk=event_id)
+        
+        event.name = request.POST["event_name"]
+        event.event_description = request.POST["event_description"]
+        event.start_datetime = datetime.strptime(f"{request.POST['start_date']} {request.POST['start_time']}", "%Y-%m-%d %H:%M")
+        event.start_date=datetime.strptime(request.POST['start_date'], "%Y-%m-%d").date()
+        event.start_time=datetime.strptime(request.POST['start_time'], "%H:%M").time()
+        event.end_datetime=datetime.strptime(f"{request.POST['end_date']} {request.POST['end_time']}", "%Y-%m-%d %H:%M")
+        event.end_date=datetime.strptime(request.POST['end_date'], "%Y-%m-%d").date()
+        event.end_time=datetime.strptime(request.POST['end_time'], "%H:%M").time()
+
+        event.save()
+        
+        return HttpResponseRedirect(reverse("timetable:existEvent"))
+    else:
+        event = Event.objects.get(pk=event_id)
+
+        event_data = {
+            "id": event.id,
+            "name": event.name,
+            "event_description": event.event_description,
+            "start_date": event.start_date,
+            "start_time": event.start_time,
+            "end_date": event.end_date,
+            "end_time": event.end_time
+        }
+
+        print(event_data)
+
+        return render(request, "timetable/editEvent.html", {
+            "event": event_data
+        })
+        
 def deleteEvent(request, event_id):
 
     delete_event = Event.objects.get(pk=event_id)
