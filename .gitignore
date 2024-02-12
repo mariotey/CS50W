@@ -7,7 +7,7 @@ __pycache__/
 venv/
 
 # Visual Studio Code settings
-.vscode/
+vscode/
 
 # Ignore migrations and database
 migrations/
